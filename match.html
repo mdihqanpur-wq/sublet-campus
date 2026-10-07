@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SubletCampus - Roommate Match</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --primary: #1b365d;
+            --accent: #f26547;
+            --accent-hover: #d94e31;
+            --bg: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* LOGO + TAGLINE */
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            height: 60px;
+            width: 138px;
+            object-fit: contain;
+        }
+
+        .brand-tagline {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: -3px;
+            white-space: nowrap;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 18px;
+            border-radius: 10px;
+        }
+
+        nav a.active {
+            color: #ffffff;
+            background: var(--primary);
+        }
+
+        nav a.logout-btn {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .match-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .match-info h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .tags-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .match-score {
+            font-size: 14px;
+            font-weight: 700;
+            color: #16a34a;
+        }
+
+        .btn-connect {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-connect:hover {
+            background: var(--accent-hover);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <a href="index.html" class="brand-title">
+
+            <img
+                src="logo.png"
+                alt="SubletCampus Logo"
+                class="brand-logo-img"
+            >
+
+            <div class="brand-tagline">
+                Education • Housing • Community
+            </div>
+
+        </a>
+
+        <nav>
+
+            <a href="discovery.html">
+                Find Housing
+            </a>
+
+            <a href="match.html" class="active">
+                Roommate Match
+            </a>
+
+            <a
+                href="index.html"
+                class="logout-btn"
+                onclick="localStorage.removeItem('userEmail')"
+            >
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <h1>
+                Find Your Ideal 6-Month Roommate
+            </h1>
+
+            <p>
+                Connect with verified students looking for a
+                6-month shared sublet in Almaty
+            </p>
+
+        </div>
+
+
+        <div class="match-card">
+
+            <div class="match-info">
+
+                <h3>
+                    Aisha — International Law (KIMEP University)
+                </h3>
+
+                <div class="tags-row">
+
+                    <span class="tag">
+                        Non-smoker
+                    </span>
+
+                    <span class="tag">
+                        Early Riser
+                    </span>
+
+                    <span class="tag">
+                        Clean & Quiet
+                    </span>
+
+                    <span class="tag">
+                        6-Month Term
+                    </span>
+
+                </div>
+
+                <div class="match-score">
+                    ⚡ 98% Lifestyle Match
+                </div>
+
+            </div>
+
+            <button
+                class="btn-connect"
+                onclick="checkAuthAndConnect(
+                    'Aisha',
+                    'aisha.kimep@kimep.kz'
+                )"
+            >
+                Connect & View Profile
+            </button>
+
+        </div>
+
+
+        <div class="match-card">
+
+            <div class="match-info">
+
+                <h3>
+                    Mahnaz — Software Engineering (AlmaU)
+                </h3>
+
+                <div class="tags-row">
+
+                    <span class="tag">
+                        Friendly
+                    </span>
+
+                    <span class="tag">
+                        Studious
+                    </span>
+
+                    <span class="tag">
+                        Python Coder
+                    </span>
+
+                    <span class="tag">
+                        6-Month Term
+                    </span>
+
+                </div>
+
+                <div class="match-score">
+                    ⚡ 95% Lifestyle Match
+                </div>
+
+            </div>
+
+            <button
+                class="btn-connect"
+                onclick="checkAuthAndConnect(
+                    'Mahnaz',
+                    'mahnaz.d@almau.edu.kz'
+                )"
+            >
+                Connect & View Profile
+            </button>
+
+        </div>
+
+
+        <div class="match-card">
+
+            <div class="match-info">
+
+                <h3>
+                    Dias — Computer Science (Satbayev University)
+                </h3>
+
+                <div class="tags-row">
+
+                    <span class="tag">
+                        Night Owl
+                    </span>
+
+                    <span class="tag">
+                        Gamers Welcome
+                    </span>
+
+                    <span class="tag">
+                        No Pets
+                    </span>
+
+                    <span class="tag">
+                        6-Month Term
+                    </span>
+
+                </div>
+
+                <div class="match-score">
+                    ⚡ 91% Lifestyle Match
+                </div>
+
+            </div>
+
+            <button
+                class="btn-connect"
+                onclick="checkAuthAndConnect(
+                    'Dias',
+                    'dias.s@satbayev.university'
+                )"
+            >
+                Connect & View Profile
+            </button>
+
+        </div>
+
+
+        <div class="match-card">
+
+            <div class="match-info">
+
+                <h3>
+                    Madina — Finance & Economics (Narhoz University)
+                </h3>
+
+                <div class="tags-row">
+
+                    <span class="tag">
+                        Very Clean
+                    </span>
+
+                    <span class="tag">
+                        Vegan
+                    </span>
+
+                    <span class="tag">
+                        Book Lover
+                    </span>
+
+                    <span class="tag">
+                        6-Month Term
+                    </span>
+
+                </div>
+
+                <div class="match-score">
+                    ⚡ 88% Lifestyle Match
+                </div>
+
+            </div>
+
+            <button
+                class="btn-connect"
+                onclick="checkAuthAndConnect(
+                    'Madina',
+                    'madina.n@narhoz.kz'
+                )"
+            >
+                Connect & View Profile
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function checkAuthAndConnect(
+            profileName,
+            profileEmail
+        ) {
+
+            const userEmail =
+                localStorage.getItem('userEmail');
+
+            if (!userEmail) {
+
+                alert(
+                    '❌ ERROR: Access Denied!\n' +
+                    'You must log in with your university email first ' +
+                    'to connect with roommates and view their profiles.'
+                );
+
+                window.location.href = 'index.html';
+
+                return;
+            }
+
+            alert(
+                '✅ Success! Connection request sent to ' +
+                profileName +
+                ' (' +
+                profileEmail +
+                ').\n' +
+                'Your verified academic email (' +
+                userEmail +
+                ') was used for secure connection.'
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubletCampus - Verified Student Housing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1b365d;
+            --accent: #f26547;
+            --accent-hover: #d94e31;
+            --bg: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* LOGO + TAGLINE */
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            height: 60px;
+            width: 138px;
+            object-fit: contain;
+        }
+
+        .brand-tagline {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: -3px;
+            white-space: nowrap;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 18px;
+            border-radius: 10px;
+        }
+
+        nav a.active {
+            color: #ffffff;
+            background: var(--primary);
+        }
+
+        .hero-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .hero-banner {
+            background:
+                linear-gradient(
+                    rgba(27, 54, 93, 0.75),
+                    rgba(15, 23, 42, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80')
+                center/cover no-repeat;
+
+            border-radius: 24px;
+            padding: 40px;
+            color: #ffffff;
+            border: 1px solid #1b365d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+
+        .hero-banner h1 {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .hero-banner p {
+            color: #e2e8f0;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .check-icon {
+            background: var(--accent);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 36px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-card h2 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .login-card p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <a href="index.html" class="brand-title">
+            <img src="logo.png" alt="SubletCampus Logo" class="brand-logo-img">
+            <div class="brand-tagline">Education • Housing • Community</div>
+        </a>
+
+        <nav>
+            <a href="index.html" class="active">Login</a>
+            <a href="discovery.html">Find Housing</a>
+            <a href="match.html">Roommate Match</a>
+        </nav>
+
+    </header>
+
+    <div class="hero-container">
+
+        <div class="hero-banner">
+
+            <span class="hero-badge">
+                🎓 Exclusive for Students
+            </span>
+
+            <h1>
+                Safe & Verified Housing in Almaty
+            </h1>
+
+            <p>
+                SubletCampus connects university students with verified
+                6-month leases and compatible roommates.
+            </p>
+
+            <div class="feature-list">
+
+                <div class="feature-item">
+                    <div class="check-icon">✓</div>
+                    Verified with official university emails
+                </div>
+
+                <div class="feature-item">
+                    <div class="check-icon">✓</div>
+                    Flexible 6-month student lease terms
+                </div>
+
+                <div class="feature-item">
+                    <div class="check-icon">✓</div>
+                    Smart roommate compatibility algorithm
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="login-card">
+
+            <h2>Student Gateway</h2>
+
+            <p>
+                Log in with your official university email to access verified listings.
+            </p>
+
+            <form onsubmit="handleLogin(event)">
+
+                <div class="form-group">
+
+                    <label>UNIVERSITY EMAIL</label>
+
+                    <input
+                        type="email"
+                        id="emailInput"
+                        placeholder="e.g. yourname@almau.edu.kz"
+                        required
+                    >
+
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Verify & Enter Gateway
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        localStorage.removeItem('userEmail');
+
+        function handleLogin(e) {
+
+            e.preventDefault();
+
+            const email =
+                document.getElementById('emailInput').value.trim();
+
+            if (!email.includes('@')) {
+
+                alert('⚠️ Please enter a valid university email!');
+
+                return;
+            }
+
+            localStorage.setItem('userEmail', email);
+
+            alert(
+                '✅ Verification Successful!\nWelcome ' + email
+            );
+
+            window.location.href = 'discovery.html';
+        }
+
+    </script>
+
+</body>
+</html>

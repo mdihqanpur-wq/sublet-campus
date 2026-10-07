@@ -1,0 +1,282 @@
+:root {
+    --primary: #2b5c8f;
+    --primary-dark: #1e4064;
+    --accent: #ff6b6b;
+    --bg-light: #f4f7f9;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: var(--bg-light);
+    color: #333;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 0.5px;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+/* New logo layout */
+
+.brand-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-logo-img {
+    height: 60px;
+    width: 138px;
+    object-fit: contain;
+}
+
+.brand-tagline {
+    font-size: 8px;
+    font-weight: 700;
+    color: #1b365d;
+    margin-top: -3px;
+    white-space: nowrap;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--primary);
+}
+
+/* =========================
+   HERO CONTAINER
+   ========================= */
+
+.hero-container {
+    display: flex;
+    max-width: 1100px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+    min-height: 520px;
+}
+
+/* =========================
+   HERO BANNER
+   ========================= */
+
+.hero-banner {
+    flex: 1;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(43, 92, 143, 0.9),
+            rgba(30, 64, 100, 0.8)
+        ),
+        url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80')
+        center/cover;
+
+    color: white;
+
+    padding: 50px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* =========================
+   HERO TITLE
+   ========================= */
+
+.hero-banner h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+/* =========================
+   HERO TEXT
+   ========================= */
+
+.hero-banner p {
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   FEATURE TAG
+   ========================= */
+
+.feature-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+/* =========================
+   LOGIN SECTION
+   ========================= */
+
+.login-section {
+    flex: 1;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-section h2 {
+    font-size: 24px;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.login-section p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   FORM
+   ========================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* =========================
+   AUTH BUTTON
+   ========================= */
+
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-auth:hover {
+    background-color: var(--primary-dark);
+}
+
+/* =========================
+   ERROR MESSAGE
+   ========================= */
+
+.error-message {
+    display: none;
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    border: 1px solid #fca5a5;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .hero-container {
+        flex-direction: column;
+        margin: 20px;
+    }
+
+    .hero-banner {
+        padding: 30px;
+    }
+
+    .brand-logo-img {
+        height: 55px;
+        width: 125px;
+    }
+
+    .brand-tagline {
+        font-size: 7px;
+    }
+
+    header {
+        padding: 12px 4%;
+    }
+
+    nav a {
+        margin-left: 8px;
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+}

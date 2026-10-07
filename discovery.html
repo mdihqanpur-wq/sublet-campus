@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SubletCampus - Find Housing</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --primary: #1b365d;
+            --accent: #f26547;
+            --accent-hover: #d94e31;
+            --bg: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* LOGO + TAGLINE */
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            height: 60px;
+            width: 138px;
+            object-fit: contain;
+        }
+
+        .brand-tagline {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: -3px;
+            white-space: nowrap;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 18px;
+            border-radius: 10px;
+        }
+
+        nav a.active {
+            color: #ffffff;
+            background: var(--primary);
+        }
+
+        nav a.logout-btn {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .filters-box {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .listing-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .listing-img {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .listing-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .listing-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .listing-details-info {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .listing-details-info strong {
+            color: var(--primary);
+        }
+
+        .btn-details {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-details:hover {
+            background: var(--accent-hover);
+        }
+
+        .no-results {
+            grid-column: span 3;
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 16px;
+            display: none;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <a href="index.html" class="brand-title">
+            <img
+                src="logo.png"
+                alt="SubletCampus Logo"
+                class="brand-logo-img"
+            >
+
+            <div class="brand-tagline">
+                Education • Housing • Community
+            </div>
+        </a>
+
+        <nav>
+
+            <a href="discovery.html" class="active">
+                Find Housing
+            </a>
+
+            <a href="match.html">
+                Roommate Match
+            </a>
+
+            <a
+                href="index.html"
+                class="logout-btn"
+                onclick="localStorage.removeItem('userEmail')"
+            >
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <h1>
+                Verified Student Sublets in Almaty
+            </h1>
+
+            <p>
+                Filter by university to see nearby listings,
+                prices, and walking distances.
+            </p>
+
+        </div>
+
+        <div class="filters-box">
+
+            <div class="filter-group">
+
+                <label>Select University</label>
+
+                <select
+                    id="uniFilter"
+                    onchange="filterListings()"
+                >
+
+                    <option value="All">
+                        All Universities
+                    </option>
+
+                    <option value="AlmaU">
+                        AlmaU (Almaty Management University)
+                    </option>
+
+                    <option value="KIMEP">
+                        KIMEP University
+                    </option>
+
+                    <option value="Satbayev">
+                        Satbayev University
+                    </option>
+
+                    <option value="KazNU">
+                        KazNU (Al-Farabi Kazakh National University)
+                    </option>
+
+                    <option value="Narhoz">
+                        Narhoz University
+                    </option>
+
+                    <option value="IITU">
+                        International Information Technology University
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="filter-group">
+
+                <label>Room Category</label>
+
+                <select
+                    id="categoryFilter"
+                    onchange="filterListings()"
+                >
+
+                    <option value="All">
+                        All Room Types
+                    </option>
+
+                    <option value="Studio">
+                        Private Studio
+                    </option>
+
+                    <option value="Shared">
+                        Shared Apartment
+                    </option>
+
+                    <option value="Dormitory">
+                        Dormitory Bed
+                    </option>
+
+                    <option value="Flat">
+                        1-Bedroom Flat
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="listings-grid">
+
+            <!-- AlmaU Listing -->
+
+            <div
+                class="listing-card"
+                data-uni="AlmaU"
+                data-cat="Studio"
+            >
+
+                <div
+                    class="listing-img"
+                    style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80')"
+                ></div>
+
+                <div class="listing-body">
+
+                    <div>
+
+                        <div class="listing-price">
+                            180,000 KZT
+                            <span style="font-size:12px; color:#64748b;">
+                                / mo
+                            </span>
+                        </div>
+
+                        <div class="listing-details-info">
+
+                            📍 <strong>AlmaU:</strong>
+                            10 mins walk<br>
+
+                            🚇 <strong>Metro:</strong>
+                            Alatau (5 min)<br>
+
+                            🛒 <strong>Mega Mall:</strong>
+                            7 mins away
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn-details"
+                        onclick="viewListingDetails(
+                            'Modern Studio near AlmaU',
+                            '180,000 KZT / mo',
+                            '10 mins walk to AlmaU, 5 mins to Alatau Metro. Fully furnished, high-speed Wi-Fi, AC, and security.',
+                            '+7 (701) 234-5678',
+                            'owner_almat@almau.edu.kz'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- KIMEP Listing -->
+
+            <div
+                class="listing-card"
+                data-uni="KIMEP"
+                data-cat="Shared"
+            >
+
+                <div
+                    class="listing-img"
+                    style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80')"
+                ></div>
+
+                <div class="listing-body">
+
+                    <div>
+
+                        <div class="listing-price">
+                            140,000 KZT
+                            <span style="font-size:12px; color:#64748b;">
+                                / mo
+                            </span>
+                        </div>
+
+                        <div class="listing-details-info">
+
+                            📍 <strong>KIMEP:</strong>
+                            8 mins walk<br>
+
+                            🚇 <strong>Metro:</strong>
+                            Almaly (3 min)<br>
+
+                            🛒 <strong>Dostyk Plaza:</strong>
+                            12 mins
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn-details"
+                        onclick="viewListingDetails(
+                            'Cozy Shared Apartment near KIMEP',
+                            '140,000 KZT / mo',
+                            '8 mins walk to KIMEP & Dostyk Plaza. Shared kitchen, quiet study room, washing machine included.',
+                            '+7 (702) 987-6543',
+                            'owner_kimep@kimep.kz'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Satbayev Listing -->
+
+            <div
+                class="listing-card"
+                data-uni="Satbayev"
+                data-cat="Flat"
+            >
+
+                <div
+                    class="listing-img"
+                    style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80')"
+                ></div>
+
+                <div class="listing-body">
+
+                    <div>
+
+                        <div class="listing-price">
+                            210,000 KZT
+                            <span style="font-size:12px; color:#64748b;">
+                                / mo
+                            </span>
+                        </div>
+
+                        <div class="listing-details-info">
+
+                            📍 <strong>Satbayev & IITU:</strong>
+                            12 mins walk<br>
+
+                            🚇 <strong>Metro:</strong>
+                            Baikonur (6 min)<br>
+
+                            🛒 <strong>Globus Mall:</strong>
+                            5 mins
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn-details"
+                        onclick="viewListingDetails(
+                            'Luxury 1-Bedroom Flat near Satbayev',
+                            '210,000 KZT / mo',
+                            '12 mins walk to Satbayev University & IITU. Modern kitchen, smart TV, 24/7 concierge.',
+                            '+7 (777) 555-4433',
+                            'owner_satbayev@satbayev.university'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- KazNU Listing -->
+
+            <div
+                class="listing-card"
+                data-uni="KazNU"
+                data-cat="Dormitory"
+            >
+
+                <div
+                    class="listing-img"
+                    style="background-image: url('https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80')"
+                ></div>
+
+                <div class="listing-body">
+
+                    <div>
+
+                        <div class="listing-price">
+                            90,000 KZT
+                            <span style="font-size:12px; color:#64748b;">
+                                / mo
+                            </span>
+                        </div>
+
+                        <div class="listing-details-info">
+
+                            📍 <strong>KazNU Campus:</strong>
+                            3 mins walk<br>
+
+                            🚌 <strong>Bus Stop:</strong>
+                            KazNU town (2 min)<br>
+
+                            🛒 <strong>Botanic Garden:</strong>
+                            5 mins
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn-details"
+                        onclick="viewListingDetails(
+                            'Student Dorm Bed near KazNU',
+                            '90,000 KZT / mo',
+                            'Located right next to KazNU campus. Includes study desk, shared kitchen, laundry room, and fast Wi-Fi.',
+                            '+7 (705) 111-2233',
+                            'owner_kaznu@kaznu.kz'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Narhoz Listing -->
+
+            <div
+                class="listing-card"
+                data-uni="Narhoz"
+                data-cat="Flat"
+            >
+
+                <div
+                    class="listing-img"
+                    style="background-image: url('https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=600&q=80')"
+                ></div>
+
+                <div class="listing-body">
+
+                    <div>
+
+                        <div class="listing-price">
+                            160,000 KZT
+                            <span style="font-size:12px; color:#64748b;">
+                                / mo
+                            </span>
+                        </div>
+
+                        <div class="listing-details-info">
+
+                            📍 <strong>Narhoz University:</strong>
+                            5 mins walk<br>
+
+                            🚇 <strong>Metro:</strong>
+                            Moscow (10 min)<br>
+
+                            🛒 <strong>Grand Park:</strong>
+                            8 mins
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn-details"
+                        onclick="viewListingDetails(
+                            'Modern 1-Bedroom near Narhoz',
+                            '160,000 KZT / mo',
+                            '5 mins walk to Narhoz University. Fully renovated, cozy balcony, central heating, and security.',
+                            '+7 (707) 333-4455',
+                            'owner_narhoz@narhoz.kz'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- IITU Listing -->
+
+            <div
+                class="listing-card"
+                data-uni="IITU"
+                data-cat="Studio"
+            >
+
+                <div
+                    class="listing-img"
+                    style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80')"
+                ></div>
+
+                <div class="listing-body">
+
+                    <div>
+
+                        <div class="listing-price">
+                            195,000 KZT
+                            <span style="font-size:12px; color:#64748b;">
+                                / mo
+                            </span>
+                        </div>
+
+                        <div class="listing-details-info">
+
+                            📍 <strong>IITU & Mega Center:</strong>
+                            4 mins walk<br>
+
+                            🚇 <strong>Metro:</strong>
+                            Sayran (12 min)<br>
+
+                            🛒 <strong>Mega Alma-Ata:</strong>
+                            4 mins
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn-details"
+                        onclick="viewListingDetails(
+                            'Tech Studio near IITU',
+                            '195,000 KZT / mo',
+                            'Extremely close to IITU and Mega Center. High-end workspace setup, ergonomic chair, ultra-fast fiber internet.',
+                            '+7 (708) 666-7788',
+                            'owner_iitu@iitu.edu.kz'
+                        )"
+                    >
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- No Results -->
+
+            <div
+                id="noResults"
+                class="no-results"
+            >
+                ❌ No apartments found matching your selected filters.
+                Try choosing a different university or room category.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function filterListings() {
+
+            const selectedUni =
+                document.getElementById('uniFilter').value;
+
+            const selectedCat =
+                document.getElementById('categoryFilter').value;
+
+            const cards =
+                document.querySelectorAll('.listing-card');
+
+            const noResultsMsg =
+                document.getElementById('noResults');
+
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+
+                const cardUni =
+                    card.getAttribute('data-uni');
+
+                const cardCat =
+                    card.getAttribute('data-cat');
+
+                const matchesUni =
+                    selectedUni === 'All' ||
+                    cardUni === selectedUni;
+
+                const matchesCat =
+                    selectedCat === 'All' ||
+                    cardCat === selectedCat;
+
+                if (matchesUni && matchesCat) {
+
+                    card.style.display = 'flex';
+
+                    visibleCount++;
+
+                } else {
+
+                    card.style.display = 'none';
+
+                }
+
+            });
+
+            if (visibleCount === 0) {
+
+                noResultsMsg.style.display = 'block';
+
+            } else {
+
+                noResultsMsg.style.display = 'none';
+
+            }
+
+        }
+
+
+        function viewListingDetails(
+            title,
+            price,
+            description,
+            phone,
+            ownerEmail
+        ) {
+
+            const userEmail =
+                localStorage.getItem('userEmail');
+
+            if (!userEmail) {
+
+                alert(
+                    '❌ ERROR: Access Denied!\n' +
+                    'You must log in with your university email first ' +
+                    'to view property details and owner contacts.'
+                );
+
+                window.location.href = 'index.html';
+
+                return;
+            }
+
+            alert(
+                '🏠 PROPERTY DETAILS:\n\n' +
+                title +
+                '\nPrice: ' +
+                price +
+                '\n\nFeatures: ' +
+                description +
+                '\n\n📞 Owner Phone: ' +
+                phone +
+                '\n📧 Owner Email: ' +
+                ownerEmail +
+                '\n\n✅ Verified Access granted for: ' +
+                userEmail
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

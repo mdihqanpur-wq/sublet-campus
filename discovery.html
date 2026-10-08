@@ -304,6 +304,11 @@
           </select>
         </div>
       </div>
+      <!-- Saved Housing Section -->
+<div id="savedHousingSection" style="margin-bottom: 30px;">
+    <h2 style="color: var(--primary); margin-bottom: 15px;">❤️ Saved Housing</h2>
+    <div id="savedHousingList"></div>
+</div>
 
       <div class="listings-grid">
         <!-- AlmaU Listing -->
@@ -663,6 +668,29 @@
           alert("This listing is already saved.");
         }
       }
+      function renderSavedListings() {
+    const savedHousingList = document.getElementById("savedHousingList");
+    const savedListings = JSON.parse(localStorage.getItem("savedListings")) || [];
+
+    if (savedListings.length === 0) {
+        savedHousingList.innerHTML = "<p style='color:#64748b;'>No saved housing yet.</p>";
+        return;
+    }
+
+    savedHousingList.innerHTML = savedListings.map(function(item) {
+        return `
+            <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:15px; margin-bottom:10px;">
+                <strong>${item.university}</strong>
+                <div style="color:#1b365d; font-weight:700; margin-top:5px;">
+                    ${item.price}
+                </div>
+                <div style="color:#64748b; font-size:13px; margin-top:5px;">
+                    ${item.details}
+                </div>
+            </div>
+        `;
+    }).join("");
+}
 
       function viewListingDetails(
         title,
@@ -700,6 +728,7 @@
             userEmail,
         );
       }
+      renderSavedListings();
     </script>
   </body>
 </html>

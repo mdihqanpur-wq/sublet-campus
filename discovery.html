@@ -663,11 +663,23 @@
           localStorage.setItem("savedListings", JSON.stringify(savedListings));
 
           button.innerHTML = "❤️ Saved";
-          alert("🏠 This housing listing has been saved!");
+          renderSavedListings();
+          
         } else {
           alert("This listing is already saved.");
         }
       }
+      function removeSavedListing(university, price) {
+    let savedListings = JSON.parse(localStorage.getItem("savedListings")) || [];
+
+    savedListings = savedListings.filter(function(item) {
+        return !(item.university === university && item.price === price);
+    });
+
+    localStorage.setItem("savedListings", JSON.stringify(savedListings));
+
+    renderSavedListings();
+}
       function renderSavedListings() {
     const savedHousingList = document.getElementById("savedHousingList");
     const savedListings = JSON.parse(localStorage.getItem("savedListings")) || [];
@@ -687,6 +699,11 @@
                 <div style="color:#64748b; font-size:13px; margin-top:5px;">
                     ${item.details}
                 </div>
+                <button
+    onclick="removeSavedListing('${item.university}', '${item.price}')"
+    style="margin-top:10px; padding:8px 14px; border:none; border-radius:8px; background:#f26547; color:white; cursor:pointer;">
+    🗑️ Remove
+</button>
             </div>
         `;
     }).join("");

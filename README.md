@@ -2,57 +2,24 @@
 
 **Education • Housing • Community**
 
-Finding a room near university is only part of the challenge. Students also need clear prices, practical locations, and roommates whose daily habits fit their own.
+SubletCampus is a student housing project for Almaty. We want to make it easier to find accommodation near campus, compare prices, and meet potential roommates with similar living preferences.
 
-SubletCampus is our student housing project for Almaty. We are building a place where students can explore accommodation near their campus, keep track of rooms they like, and find potential roommates.
+The idea is simple: students should be able to see their housing options clearly and make a more informed choice about where, and with whom, they live.
 
-## Current prototype
+## The first version
 
-This version demonstrates the main student journey:
+Our frontend prototype brings together housing discovery and roommate profiles. Students can browse sample rooms, filter by university and room type, and save places they want to revisit.
 
-- Enter an email through the student gateway.
-- Browse six sample housing listings.
-- Filter housing by university and room category.
-- Save favourite listings and remove them later.
-- Explore four sample roommate profiles.
+The housing page covers AlmaU, KIMEP, Satbayev, KazNU, Narhoz, and IITU. The roommate page explores how lifestyle preferences could help students find someone suitable to share a home with.
 
-The interface uses HTML, CSS, and JavaScript. Saved housing is stored in the current browser using localStorage.
+## Where we are now
 
-## Run in GitHub Codespaces
+The prototype is built with HTML, CSS, and JavaScript. Saved listings stay in the browser through localStorage.
 
-Open the repository in a Codespace, then run:
+We are still developing the platform. The listings and profiles are examples, email verification is not connected yet, and roommate match scores are illustrative. Contact buttons currently demonstrate the intended interaction.
 
-```bash
-cd /workspaces/sublet-campus
-python3 -m http.server 5501 --bind 0.0.0.0
-```
+## What we are working towards
 
-Open the **Ports** tab and select **Open in Browser** for port **5501**. If the port is missing, forward it manually.
+The next stage is to connect the interface to verified university accounts, student profiles, and a shared housing database. We also plan to support listing submissions, moderation, and roommate matching based on budget, move-in dates, and everyday living habits.
 
-No package installation or build step is required. External images and fonts need an internet connection.
-
-## Project files
-
-| File | Purpose |
-| --- | --- |
-| `index.html` | Landing page and demonstration email entry |
-| `discovery.html` | Housing listings, filters, and saved housing |
-| `match.html` | Sample roommate profiles |
-| `style.css` | Separate stylesheet, currently not linked by the HTML pages |
-| `logo.png` | Project logo |
-
-## Development status
-
-This is an early frontend prototype. Email ownership is not verified, and university email domains are not enforced.
-
-Housing details and roommate profiles are sample content. Match percentages are fixed examples, and connection buttons display an alert rather than sending a request. Saved listings remain in the current browser and are not linked to individual accounts.
-
-## What comes next
-
-Our next priorities are responsive layouts, shared styling, verified university accounts, student profiles, and a backend for housing submissions and moderation.
-
-Roommate matching will use practical preferences such as budget, move-in dates, quiet hours, and lifestyle.
-
-## Working together
-
-Create a branch for each contribution and open a pull request. Describe the change and how you checked it so teammates can review the work before merging.
+Our aim is to build something useful for students navigating housing in Almaty, starting with a clear and practical experience.

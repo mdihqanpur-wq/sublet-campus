@@ -1,25 +1,64 @@
 # SubletCampus
-
 **Education • Housing • Community**
 
-SubletCampus is a student housing project for Almaty. We want to make it easier to find accommodation near campus, compare prices, and meet potential roommates with similar living preferences.
+SubletCampus is a student housing prototype designed for students in Almaty, Kazakhstan. It aims to help students explore accommodation options near universities, compare housing choices, and eventually find compatible roommates.
 
-The idea is simple: students should be able to see their housing options clearly and make a more informed choice about where, and with whom, they live.
+## Live Demo
 
-## The first version
+- **Frontend:** https://sublet-campus-1.onrender.com/
+- **Backend:** https://sublet-campus.onrender.com/
+- **API Health Check:** https://sublet-campus.onrender.com/api
+- **Housing Listings API:** https://sublet-campus.onrender.com/api/listings
 
-Our frontend prototype brings together housing discovery and roommate profiles. Students can browse sample rooms, filter by university and room type, and save places they want to revisit.
+## Current Features
 
-The housing page covers AlmaU, KIMEP, Satbayev, KazNU, Narhoz, and IITU. The roommate page explores how lifestyle preferences could help students find someone suitable to share a home with.
+### Housing Discovery
+- Browse sample housing options near universities in Almaty.
+- Filter listings by university and room category.
+- Save and remove housing listings using browser local storage.
+- Load approved housing records from Supabase through the backend API.
 
-## Where we are now
+### Student Profile
+- Enter student details, housing needs, and lifestyle preferences.
+- Preview the profile before using it.
+- Save or delete the profile in the current browser.
 
-The prototype is built with HTML, CSS, and JavaScript. Saved listings stay in the browser through localStorage.
+### Backend and Database
+- Node.js and Express backend deployed on Render.
+- Supabase database connection for housing listings.
+- The API returns approved listing records from Supabase.
 
-We are still developing the platform. The listings and profiles are examples, email verification is not connected yet, and roommate match scores are illustrative. Contact buttons currently demonstrate the intended interaction.
+## Technology Stack
 
-## What we are working towards
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Node.js, Express
+- **Database:** Supabase
+- **Deployment:** Render
 
-The next stage is to connect the interface to verified university accounts, student profiles, and a shared housing database. We also plan to support listing submissions, moderation, and roommate matching based on budget, move-in dates, and everyday living habits.
+## Current Limitations
 
-Our aim is to build something useful for students navigating housing in Almaty, starting with a clear and practical experience.
+This project is an early-stage prototype.
+
+- Most housing cards contain sample information. The listing named "DEMO - Student Apartment" is a demonstration record, not a verified property.
+- Saved listings and student profiles are stored in browser local storage and are not shared between users or devices.
+- The current login checks allowed university email domains but does not verify ownership of an email address.
+- Real student accounts, shared profiles, and roommate matching between different users are not implemented yet.
+- Listing submissions, moderation, and real contact workflows are planned for future development.
+
+## Future Development
+
+The next development stage will focus on:
+
+1. Real student registration and university email verification.
+2. Secure storage of student profiles in Supabase.
+3. A shared roommate discovery page.
+4. Matching based on budget, preferred area, length of stay, and lifestyle preferences.
+5. Housing submissions and moderation.
+
+## Running the Project Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/mdihqanpur-wq/sublet-campus.git
+cd sublet-campus

@@ -169,12 +169,16 @@
       }
 
       .listing-body {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        justify-content: space-between;
-      }
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
+.listing-body > div:first-child {
+  flex: 1;
+}
 
       .listing-price {
         font-size: 18px;
@@ -234,8 +238,6 @@
     <header>
       <a href="index.html" class="brand-title">
         <img src="logo.png" alt="SubletCampus Logo" class="brand-logo-img" />
-
-        <div class="brand-tagline">Education • Housing • Community</div>
       </a>
 
       <nav>
@@ -255,11 +257,10 @@
 
     <div class="container">
       <div class="page-header">
-        <h1>Verified Student Sublets in Almaty</h1>
+        <h1>Student Housing in Almaty</h1>
 
         <p>
-          Filter by university to see nearby listings, prices, and walking
-          distances.
+          Explore housing options near Almaty universities.
         </p>
       </div>
 
@@ -305,10 +306,12 @@
         </div>
       </div>
       <!-- Saved Housing Section -->
-<div id="savedHousingSection" style="margin-bottom: 30px;">
-    <h2 style="color: var(--primary); margin-bottom: 15px;">❤️ Saved Housing</h2>
-    <div id="savedHousingList"></div>
-</div>
+      <div id="savedHousingSection" style="margin-bottom: 30px">
+        <h2 style="color: var(--primary); margin-bottom: 15px">
+          ❤️ Saved Housing
+        </h2>
+        <div id="savedHousingList"></div>
+      </div>
 
       <div class="listings-grid">
         <!-- AlmaU Listing -->
@@ -323,6 +326,7 @@
 
           <div class="listing-body">
             <div>
+              <h3 class="listing-title">Modern Studio near AlmaU</h3>
               <div class="listing-price">
                 180,000 KZT
                 <span style="font-size: 12px; color: #64748b"> / mo </span>
@@ -367,9 +371,11 @@
               background-image: url(&quot;https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80&quot;);
             "
           ></div>
+          
 
           <div class="listing-body">
             <div>
+              <h3 class="listing-title">Cozy Shared Apartment near KIMEP</h3>
               <div class="listing-price">
                 140,000 KZT
                 <span style="font-size: 12px; color: #64748b"> / mo </span>
@@ -417,6 +423,7 @@
 
           <div class="listing-body">
             <div>
+               <h3 class="listing-title">Luxury 1-Bedroom Flat near Satbayev</h3>
               <div class="listing-price">
                 210,000 KZT
                 <span style="font-size: 12px; color: #64748b"> / mo </span>
@@ -464,6 +471,7 @@
 
           <div class="listing-body">
             <div>
+              <h3 class="listing-title">Student Dorm Bed near KazNU</h3>
               <div class="listing-price">
                 90,000 KZT
                 <span style="font-size: 12px; color: #64748b"> / mo </span>
@@ -511,6 +519,7 @@
 
           <div class="listing-body">
             <div>
+               <h3 class="listing-title">Modern 1-Bedroom near Narhoz</h3>
               <div class="listing-price">
                 160,000 KZT
                 <span style="font-size: 12px; color: #64748b"> / mo </span>
@@ -558,6 +567,7 @@
 
           <div class="listing-body">
             <div>
+              <h3 class="listing-title">Tech Studio near IITU</h3>
               <div class="listing-price">
                 195,000 KZT
                 <span style="font-size: 12px; color: #64748b"> / mo </span>
@@ -664,33 +674,36 @@
 
           button.innerHTML = "❤️ Saved";
           renderSavedListings();
-          
         } else {
           alert("This listing is already saved.");
         }
       }
       function removeSavedListing(university, price) {
-    let savedListings = JSON.parse(localStorage.getItem("savedListings")) || [];
+        let savedListings =
+          JSON.parse(localStorage.getItem("savedListings")) || [];
 
-    savedListings = savedListings.filter(function(item) {
-        return !(item.university === university && item.price === price);
-    });
+        savedListings = savedListings.filter(function (item) {
+          return !(item.university === university && item.price === price);
+        });
 
-    localStorage.setItem("savedListings", JSON.stringify(savedListings));
+        localStorage.setItem("savedListings", JSON.stringify(savedListings));
 
-    renderSavedListings();
-}
+        renderSavedListings();
+      }
       function renderSavedListings() {
-    const savedHousingList = document.getElementById("savedHousingList");
-    const savedListings = JSON.parse(localStorage.getItem("savedListings")) || [];
+        const savedHousingList = document.getElementById("savedHousingList");
+        const savedListings =
+          JSON.parse(localStorage.getItem("savedListings")) || [];
 
-    if (savedListings.length === 0) {
-        savedHousingList.innerHTML = "<p style='color:#64748b;'>No saved housing yet.</p>";
-        return;
-    }
+        if (savedListings.length === 0) {
+          savedHousingList.innerHTML =
+            "<p style='color:#64748b;'>No saved housing yet.</p>";
+          return;
+        }
 
-    savedHousingList.innerHTML = savedListings.map(function(item) {
-        return `
+        savedHousingList.innerHTML = savedListings
+          .map(function (item) {
+            return `
             <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:15px; margin-bottom:10px;">
                 <strong>${item.university}</strong>
                 <div style="color:#1b365d; font-weight:700; margin-top:5px;">
@@ -706,8 +719,9 @@
 </button>
             </div>
         `;
-    }).join("");
-}
+          })
+          .join("");
+      }
 
       function viewListingDetails(
         title,
@@ -746,6 +760,113 @@
         );
       }
       renderSavedListings();
+      async function loadDatabaseListings() {
+        const grid = document.querySelector(".listings-grid");
+        if (!grid) return;
+
+        try {
+          const response = await fetch("https://sublet-campus.onrender.com/api/listings");
+
+          if (!response.ok) {
+            throw new Error("Could not load listings");
+          }
+
+          const result = await response.json();
+
+          if (!Array.isArray(result.data)) {
+            throw new Error("Invalid listings response");
+          }
+
+          if (result.data.length === 0) {
+            console.log("No approved database listings yet.");
+            return;
+          }
+
+          result.data.forEach((listing) => {
+            const card = document.createElement("div");
+            card.className = "listing-card api-listing-card";
+            card.dataset.uni = listing.university || "Other";
+
+const housingType = String(listing.housing_type || "").toLowerCase();
+
+card.dataset.cat = housingType.includes("dorm")
+  ? "Dormitory"
+  : housingType.includes("shared")
+  ? "Shared"
+  : housingType.includes("studio")
+  ? "Studio"
+  : "Flat";
+
+            const image = document.createElement("div");
+            image.className = "listing-img";
+            image.style.background =
+              "linear-gradient(135deg, #dbeafe, #f1f5f9)";
+            image.style.display = "flex";
+            image.style.alignItems = "center";
+            image.style.justifyContent = "center";
+            image.textContent = "Demo listing";
+
+            const content = document.createElement("div");
+            content.className = "listing-body";
+
+            const title = document.createElement("h3");
+            title.textContent = listing.title || "Housing listing";
+
+            const address = document.createElement("p");
+            address.textContent = listing.address || "Address not provided";
+            const details = document.createElement("div");
+details.className = "listing-details-info";
+
+            const price = document.createElement("div");
+price.className = "listing-price";
+            price.textContent = `${Number(listing.price).toLocaleString()} KZT / mo`;
+
+            const type = document.createElement("p");
+            type.textContent = `Type: ${listing.housing_type || "Not specified"}`;
+            details.append(address, type);
+
+            const label = document.createElement("small");
+            label.textContent = "Demo listing from Supabase";
+
+           
+            const saveButton = document.createElement("button");
+saveButton.className = "btn-save";
+saveButton.type = "button";
+saveButton.textContent = "❤️ Save";
+
+saveButton.addEventListener("click", () => {
+  saveListing(saveButton);
+});
+const detailsButton = document.createElement("button");
+detailsButton.className = "btn-details";
+detailsButton.style.marginTop = "0";
+detailsButton.type = "button";
+detailsButton.textContent = "View Details";
+
+detailsButton.addEventListener("click", () => {
+  alert(
+    "DEMO LISTING DETAILS\n\n" +
+    "Title: " + (listing.title || "Housing listing") + "\n" +
+    "Price: " + price.innerText + "\n" +
+    "Address: " + (listing.address || "Address not provided") + "\n" +
+    "Type: " + (listing.housing_type || "Not specified") +
+    "\n\nOwner contact details are not available for this demo listing."
+  );
+});
+
+const listingInfo = document.createElement("div");
+listingInfo.append(title, price, details, label);
+
+content.append(listingInfo, saveButton, detailsButton);
+            card.append(image, content);
+            grid.prepend(card);
+          });
+        } catch (error) {
+          console.error("Database listings error:", error);
+        }
+      }
+
+      loadDatabaseListings();
     </script>
   </body>
 </html>

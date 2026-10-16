@@ -35,7 +35,7 @@
     return { id: `api:${row.id}`, title: String(row.title || 'Housing listing'),
       university: String(row.university || 'Other'), category: category(row.housing_type),
       price: Number(row.price), details: `${row.address || 'Address not provided'}. Type: ${row.housing_type || 'Not specified'}.`,
-      source: 'database' };
+      source: 'database', latitude: row.latitude, longitude: row.longitude };
   }
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { checkEmail, category, matches, databaseRecord };
@@ -136,6 +136,18 @@
   ];
   const samples = sampleRows.map(([id, title, university, type, price, details, photo]) =>
     ({ id: `sample:${id}`, title, university, category: type, price, details, photo, source: 'sample' }));
+  function showDetails(item) {
+    return message(item.title,
+      `${money(item.price)}\n\n${item.details}\n\n${item.source === 'sample' ? 'Sample property. Photos, distances and prices are illustrative.' : 'Approved database record. Approval does not verify that a property is genuine.'}\n\nOwner contact details are not available in this prototype.`);
+  }
+  const mapController = window.SubletHousingMap.create({
+    onChange: () => render(), onDetails: showDetails,
+    onSelect: item => {
+      for (const card of $('listingsGrid').children) card.classList.toggle('map-selected', card.dataset.listingId === item.id);
+      const card = [...$('listingsGrid').children].find(card => card.dataset.listingId === item.id);
+      if (card) { card.scrollIntoView({ block: 'nearest', behavior: 'auto' }); card.focus({ preventScroll: true }); }
+    }
+  });
   let items = [...samples], saved = [], storageError = false, loading = false;
   try {
     const parsed = JSON.parse(localStorage.getItem('savedListings') || '[]');
@@ -188,6 +200,7 @@
     $('listingsGrid').replaceChildren();
     for (const item of filtered) {
       const card = node('article', undefined, 'listing-card');
+      card.dataset.listingId = item.id; card.tabIndex = -1;
       let media = node('div', 'Database listing', 'listing-media placeholder');
       if (item.photo) {
         media = node('img', undefined, 'listing-media');
@@ -198,10 +211,14 @@
       const badge = node('span', item.source === 'sample' ? 'Sample property' : 'Database record', 'badge');
       const details = node('button', 'View details', 'button'); details.type = 'button';
       details.setAttribute('aria-label', `View details for ${item.title}`);
-      details.addEventListener('click', () => message(item.title,
-        `${money(item.price)}\n\n${item.details}\n\n${item.source === 'sample' ? 'Sample property. Photos, distances and prices are illustrative.' : 'Approved database record. Approval does not verify that a property is genuine.'}\n\nOwner contact details are not available in this prototype.`));
+      details.addEventListener('click', () => showDetails(item));
       const actions = node('div', undefined, 'card-actions'); actions.append(saveButton(item), details);
       body.append(badge, node('h3', item.title), node('p', money(item.price), 'price'), node('p', item.details, 'muted'), actions);
+      const locationLabel = mapController.hasLocation(item) ? mapController.isDraft(item) ? 'Location draft saved in this browser' : 'Listing location available' : 'Location not provided';
+      const mapButton = node('button', mapController.hasLocation(item) ? 'Show on map' : 'Choose a location draft', 'button secondary map-location-button');
+      mapButton.type = 'button';
+      mapButton.addEventListener('click', () => mapController.hasLocation(item) ? mapController.locate(item) : mapController.choose(item));
+      body.append(mapButton, node('small', locationLabel, 'location-label'));
       card.append(media, body); $('listingsGrid').append(card);
     }
     $('savedHousingList').replaceChildren();
@@ -214,6 +231,7 @@
       info.append(node('h3', known ? known.title : item.title), node('p', money(item.price)), node('p', item.university, 'muted'));
       row.append(info, saveButton(item, true)); $('savedHousingList').append(row);
     }
+    mapController.update(filtered);
   }
   for (const id of ['uniFilter', 'categoryFilter', 'sortFilter']) $(id).addEventListener('change', render);
   $('searchInput').addEventListener('input', render);

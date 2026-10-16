@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="campus.css">
+  <link rel="stylesheet" href="housing-map.css">
+  <script src="map-config.js" defer></script>
+  <script src="housing-map.js" defer></script>
   <script src="campus.js" defer></script>
 </head>
 <body>
@@ -41,10 +44,36 @@
       <p id="savedNotice" role="status"></p>
       <div id="savedHousingList"></div>
     </section>
-    <div class="section-heading"><h2>Explore housing</h2><span id="resultCount" role="status"></span></div>
+    <div class="section-heading"><h2>Explore housing</h2><div class="map-controls"><span id="resultCount" role="status"></span><button id="toggleMap" class="button secondary" type="button" aria-expanded="false" aria-controls="mapPanel">Show map</button></div></div>
     <p id="actionStatus" class="sr-only" role="status"></p>
     <p id="noResults" class="notice" hidden>No housing matches these filters. Try another university or reset your search.</p>
-    <div id="listingsGrid" class="listings-grid"></div>
+    <div id="housingLayout" class="housing-layout">
+      <div><div id="listingsGrid" class="listings-grid"></div></div>
+      <aside id="mapPanel" class="map-panel" aria-label="Housing map" hidden>
+        <div class="map-toolbar"><div><h3>Explore Almaty</h3><small>Interactive map by 2GIS</small></div><button id="fitMap" class="button secondary" type="button">Fit listings</button></div>
+        <div id="housingMap" class="housing-map" role="region" aria-label="Interactive housing locations in Almaty"></div>
+        <div class="map-copy">
+          <p id="mapStatus" role="status">Open the map to explore Almaty.</p>
+          <button id="mapRetry" class="button secondary" type="button" hidden>Retry map</button>
+          <p id="mapCount" role="status"></p>
+          <p id="mapEmpty" class="muted">No matching listings have coordinates yet. Choose a location draft from a housing card to try the map.</p>
+          <p id="mapStorageNote" role="status"></p>
+        </div>
+        <section id="mapSelection" class="map-selection" aria-label="Selected housing" hidden></section>
+        <section id="mapEditor" class="map-editor" aria-labelledby="mapEditorTitle" hidden>
+          <h3 id="mapEditorTitle">Location draft</h3>
+          <p>Click the map or enter coordinates. Save only a location you intend to use. Draft pins stay in this browser and are not published or verified.</p>
+          <form id="mapDraftForm" novalidate>
+            <div class="coordinate-fields">
+              <div><label for="draftLatitude">Latitude</label><input id="draftLatitude" type="number" step="any" inputmode="decimal" placeholder="43.238949" required></div>
+              <div><label for="draftLongitude">Longitude</label><input id="draftLongitude" type="number" step="any" inputmode="decimal" placeholder="76.889709" required></div>
+            </div>
+            <p id="mapEditorStatus" role="status"></p>
+            <div class="map-actions"><button class="button" type="submit">Save location draft</button><button id="cancelMapDraft" class="button secondary" type="button">Cancel</button></div>
+          </form>
+        </section>
+      </aside>
+    </div>
     <noscript><p>Enable JavaScript to load housing, filters, and saved rooms.</p></noscript>
   </main>
   <footer>Sample information is illustrative. Database approval is not property verification.</footer>

@@ -8,15 +8,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="campus.css">
-  <script src="campus.js" defer></script>
+  <link rel="stylesheet" href="auth.css">
+  <script src="vendor/supabase.js" defer></script>
+  <script src="auth-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="gateway.js" defer></script>
 </head>
 <body>
   <header>
     <a href="index.html" class="brand"><img src="logo.png" alt="SubletCampus"><small>Education • Housing • Community</small></a>
     <nav aria-label="Main navigation">
-      <a href="index.html" aria-current="page">Student Gateway</a>
       <a href="discovery.html">Find Housing</a>
-      <a href="match.html">My Profile</a>
+      <a href="match.html">Housing Profile</a>
+      <a href="account.html">My Account</a>
+      <a href="index.html" aria-current="page">Sign in</a>
     </nav>
   </header>
   <main class="gateway">
@@ -24,21 +29,45 @@
       <p class="eyebrow">A place for student life</p>
       <h1 id="introTitle">Find your space in Almaty.</h1>
       <p>Explore rooms near campus and keep your housing plans in one place.</p>
-      <ul><li>Housing around Almaty universities</li><li>Saved rooms you can return to</li><li>A profile for your housing needs and daily habits</li></ul>
-      <p>Our first version includes sample properties and locally saved profiles.</p>
+      <ul><li>Sign in with your university email</li><li>Compare housing and explore the map</li><li>Keep your account details private</li></ul>
+      <p>Sample properties are labelled. Housing profiles and shortlists currently stay in your browser.</p>
     </section>
-    <section class="panel" aria-labelledby="gatewayTitle">
-      <h2 id="gatewayTitle">Student Gateway</h2>
-      <p class="muted">Continue with an email from a supported university.</p>
-      <form id="loginForm" novalidate>
-        <label for="emailInput">University email</label>
-        <input type="email" id="emailInput" name="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="yourname@almau.edu.kz" aria-describedby="emailError emailNote" required>
-        <p id="emailError" class="field-error" aria-live="polite"></p>
-        <button class="button wide" id="loginButton" type="submit">Continue to housing</button>
-      </form>
-      <p id="emailNote" class="notice">This gateway checks the email domain. It does not yet verify email ownership or create an account.</p>
-      <details><summary>Supported university domains</summary><p id="supportedDomains"></p></details>
-      <noscript><p>Enable JavaScript to use the gateway.</p></noscript>
+    <section class="panel auth-panel" aria-labelledby="gatewayTitle">
+      <h2 id="gatewayTitle">Welcome back</h2>
+      <div id="gatewayForms">
+        <div class="auth-tabs" id="authTabs" aria-label="Account options">
+          <button type="button" class="button secondary" id="loginTab" aria-pressed="true">Sign in</button>
+          <button type="button" class="button secondary" id="signupTab" aria-pressed="false">Create account</button>
+        </div>
+        <form id="loginForm" novalidate>
+          <div id="nameFields" hidden>
+            <label for="firstName">First name</label><input id="firstName" autocomplete="given-name" maxlength="60">
+            <label for="lastName">Last name</label><input id="lastName" autocomplete="family-name" maxlength="60">
+          </div>
+          <label for="emailInput">University email</label>
+          <input type="email" id="emailInput" name="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="yourname@almau.edu.kz" aria-describedby="emailError emailNote" required>
+          <button class="button wide" id="loginButton" type="submit">Send verification code</button>
+        </form>
+        <form id="codeForm" hidden novalidate>
+          <p>Enter the code sent to <strong id="codeDestination"></strong>.</p>
+          <label for="otpInput">Verification code</label>
+          <input id="otpInput" class="code-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required aria-describedby="deliveryNote">
+          <button id="verifyButton" class="button wide" type="submit">Verify and continue</button>
+          <p id="deliveryNote" class="muted" role="status"></p>
+          <button id="resendCode" class="text-button" type="button" disabled>Resend code</button><br>
+          <button id="changeEmail" class="text-button" type="button">Use a different email</button>
+        </form>
+        <p id="emailError" class="field-error" role="status"></p>
+        <p id="emailNote" class="notice">We’ll send a one-time code to your university inbox. No password needed.</p>
+        <p id="connectionNote" class="field-error" hidden>Your previous session could not be checked. You can try signing in again.</p>
+        <details><summary>Supported university domains</summary><p id="supportedDomains"></p></details>
+      </div>
+      <div id="existingAccount" hidden>
+        <p>You’re signed in as <strong id="signedInEmail"></strong>.</p>
+        <div class="card-actions"><a class="button" id="continueHousing" href="discovery.html">Find housing</a><a class="button secondary" href="account.html">My account</a></div>
+        <button class="text-button" id="signOutHere" type="button">Sign out</button>
+      </div>
+      <noscript><p>Enable JavaScript to sign in to SubletCampus.</p></noscript>
     </section>
   </main>
   <footer>SubletCampus · Education • Housing • Community</footer>

@@ -9,20 +9,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="campus.css">
   <link rel="stylesheet" href="housing-map.css">
+  <link rel="stylesheet" href="auth.css">
+  <script src="vendor/supabase.js" defer></script>
+  <script src="auth-config.js" defer></script>
+  <script src="auth.js" defer></script>
   <script src="map-config.js" defer></script>
   <script src="housing-map.js" defer></script>
   <script src="campus.js" defer></script>
 </head>
-<body>
+<body data-student-page>
   <header>
     <a href="index.html" class="brand"><img src="logo.png" alt="SubletCampus"><small>Education • Housing • Community</small></a>
     <nav aria-label="Main navigation">
       <a href="discovery.html" aria-current="page">Find Housing</a>
       <a href="match.html">My Profile</a>
+      <a href="account.html">My Account</a>
       <a href="index.html" data-account>Student Gateway</a>
     </nav>
   </header>
-  <main>
+  <section id="authLoading" class="auth-loading" role="status"><p>Checking your account…</p><noscript>Enable JavaScript to view housing.</noscript></section>
+  <main data-student-content hidden>
     <p class="eyebrow">Around your campus</p>
     <h1>Student housing in Almaty</h1>
     <p class="muted">Compare rooms, narrow your search, and save the places you like.</p>

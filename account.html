@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SubletCampus | My Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="campus.css">
+  <link rel="stylesheet" href="auth.css">
+  <script src="vendor/supabase.js" defer></script>
+  <script src="auth-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="account.js" defer></script>
+</head>
+<body data-student-page>
+  <header>
+    <a href="index.html" class="brand"><img src="logo.png" alt="SubletCampus"><small>Education • Housing • Community</small></a>
+    <nav aria-label="Main navigation">
+      <a href="discovery.html">Find Housing</a>
+      <a href="match.html">Housing Profile</a>
+      <a href="account.html">My Account</a>
+      <a href="index.html" data-account>Sign out</a>
+    </nav>
+  </header>
+  <section id="authLoading" class="auth-loading" role="status"><p>Checking your account…</p><noscript>Enable JavaScript to open your account.</noscript></section>
+  <main data-student-content hidden class="account-layout">
+    <p class="eyebrow">Your student account</p><h1>Make yourself at home.</h1>
+    <p><strong id="accountEmail"></strong> · <span id="accountUniversity"></span></p>
+    <p id="accountNotice" class="notice" role="status">Loading your details…</p>
+    <section class="panel" aria-labelledby="profileTitle">
+      <h2 id="profileTitle">About you</h2>
+      <form id="cloudProfileForm">
+        <div class="account-fields">
+          <div><label for="first_name">First name</label><input id="first_name" autocomplete="given-name" maxlength="60" required></div>
+          <div><label for="last_name">Last name</label><input id="last_name" autocomplete="family-name" maxlength="60" required></div>
+          <div><label for="display_name">Display name</label><input id="display_name" autocomplete="nickname" maxlength="60" required></div>
+          <div><label for="major">Major / field of study</label><input id="major" maxlength="100"></div>
+          <div><label for="year_of_study">Year of study</label><select id="year_of_study"><option value="">Choose later</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+          <div class="full"><label for="bio">A little about you</label><textarea id="bio" maxlength="500"></textarea></div>
+        </div>
+        <div class="card-actions"><button id="profileSave" class="button" type="submit" disabled>Save account details</button></div>
+        <p id="profileStatus" role="status"></p>
+      </form>
+    </section>
+    <section class="panel" aria-labelledby="contactTitle">
+      <h2 id="contactTitle">Private contact details</h2>
+      <p class="muted">Both fields are optional. They aren’t verified and can’t be used to sign in or recover your account yet.</p>
+      <form id="contactForm">
+        <div class="account-fields">
+          <div><label for="phone">Phone number</label><input id="phone" type="tel" autocomplete="tel" maxlength="16" placeholder="+77001234567" pattern="\+[1-9][0-9]{6,14}"></div>
+          <div><label for="alternate_email">Alternative email</label><input id="alternate_email" type="email" autocomplete="email" maxlength="254"></div>
+        </div>
+        <div class="card-actions"><button id="contactSave" class="button" type="submit" disabled>Save contact details</button></div>
+        <p id="contactStatus" role="status"></p>
+      </form>
+    </section>
+    <div class="card-actions"><a href="discovery.html" class="button">Continue to housing</a><a href="match.html" class="button secondary">Housing profile</a></div>
+  </main>
+  <footer>SubletCampus · Education • Housing • Community</footer>
+</body></html>

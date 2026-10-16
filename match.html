@@ -59,8 +59,12 @@
       .field.full { grid-column:auto; }
     }
   </style>
+  <link rel="stylesheet" href="auth.css">
+  <script src="vendor/supabase.js" defer></script>
+  <script src="auth-config.js" defer></script>
+  <script src="auth.js" defer></script>
 </head>
-<body>
+<body data-student-page>
   <header>
     <a href="index.html" class="brand-title" aria-label="SubletCampus home">
       <img src="logo.png" alt="SubletCampus Logo" class="brand-logo-img">
@@ -68,11 +72,13 @@
     <nav>
       <a href="discovery.html">Find Housing</a>
       <a href="match.html" class="active">My Profile</a>
-      <a href="index.html" class="logout-btn" onclick="localStorage.removeItem('userEmail')">Logout</a>
+      <a href="account.html">My Account</a>
+      <a href="index.html" class="logout-btn" data-account>Sign out</a>
     </nav>
   </header>
 
-  <main class="container">
+  <section id="authLoading" class="auth-loading" role="status"><p>Checking your account…</p><noscript>Enable JavaScript to open your housing profile.</noscript></section>
+  <main class="container" data-student-content hidden>
     <section class="page-header">
       <h1>My Student Profile</h1>
       <p>Create your own student profile for SubletCampus. Add your details, housing needs, and lifestyle so other students can understand who you are before connecting.</p>
@@ -176,7 +182,7 @@
           </div>
         </div>
 
-        <div class="privacy"><strong>Privacy note:</strong> This version stores your profile in this browser only. It does not create a real account, verify your university, send contact requests, or save information to Supabase. Do not use a shared computer for private details.</div>
+        <div class="privacy"><strong>Privacy note:</strong> Your housing preferences on this page stay in this browser. Your verified account details are stored separately in My Account. Shared roommate discovery and contact requests are not available yet. Do not use a shared computer for private details.</div>
         <div class="actions">
           <button class="btn btn-primary" type="submit">Save My Profile</button>
           <button class="btn btn-secondary" type="button" id="previewButton">Preview Profile</button>
@@ -204,7 +210,10 @@
   <footer>SubletCampus · Student housing and roommate connections in Almaty</footer>
 
   <script>
-    const STORAGE_KEY = "subletCampusMyProfile";
+    document.addEventListener('DOMContentLoaded', async () => {
+    const account = await window.SubletAuth.requireStudent();
+    if (!account) return;
+    const STORAGE_KEY = `subletCampusMyProfile:${account.user_id}`;
     const form = document.getElementById("profileForm");
     const statusMessage = document.getElementById("statusMessage");
     const preview = document.getElementById("profilePreview");
@@ -310,6 +319,7 @@
     } catch (error) {
       showStatus("A saved profile could not be loaded. You can create a new one.", true);
     }
+    });
   </script>
 </body>
 </html>

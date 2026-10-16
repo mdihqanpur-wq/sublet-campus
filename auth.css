@@ -1,0 +1,19 @@
+[hidden] { display: none !important; }
+.auth-loading { max-width: 700px; margin: 64px auto; padding: 24px; }
+.auth-tabs { display: flex; gap: 10px; margin-bottom: 24px; }
+.auth-tabs button { flex: 1; }
+.auth-tabs [aria-pressed="true"] { background: #0f5b46; color: white; }
+.auth-panel label { display: block; margin-top: 16px; }
+.auth-panel button.wide { margin-top: 18px; }
+.auth-panel .code-input { font-size: 26px; letter-spacing: 8px; text-align: center; }
+.auth-panel .text-button { border: 0; background: transparent; color: #0f5b46; text-decoration: underline; padding: 12px 0; cursor: pointer; font: inherit; }
+.auth-panel .text-button:disabled { color: #64748b; cursor: wait; }
+.account-layout { max-width: 900px; margin: auto; }
+.account-layout .panel { margin: 24px 0; }
+.account-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.account-fields label { display: block; margin-bottom: 8px; }
+.account-fields .full { grid-column: 1 / -1; }
+.account-layout textarea { width: 100%; min-height: 110px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font: inherit; box-sizing: border-box; }
+.account-layout .card-actions { margin-top: 20px; }
+.account-layout button:disabled, .auth-panel button:disabled { opacity: .6; cursor: wait; }
+@media (max-width: 600px) { .account-fields { grid-template-columns: 1fr; } }

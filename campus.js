@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   'use strict';
   const domains = ['almau.edu.kz', 'kimep.kz', 'kaznu.kz', 'kaznu.edu.kz', 'satbayev.university', 'narxoz.kz', 'iitu.edu.kz'];
   function checkEmail(input) {
@@ -82,49 +82,9 @@
     queue = result.catch(() => {});
     return result;
   }
-  function session() {
-    try {
-      const value = localStorage.getItem('userEmail');
-      if (value && checkEmail(value).ok) return checkEmail(value).email;
-      if (value) localStorage.removeItem('userEmail');
-    } catch (_) { /* Browsing remains available when storage is disabled. */ }
-    return null;
-  }
-  const email = session();
-  document.querySelectorAll('[data-account]').forEach(link => {
-    link.textContent = email ? 'Leave gateway' : 'Student Gateway';
-    if (email) link.addEventListener('click', async event => {
-      event.preventDefault();
-      if (!(await message('Leave the gateway?', 'Your saved housing and profile will stay in this browser.', 'Leave gateway', true))) return;
-      try { localStorage.removeItem('userEmail'); location.href = 'index.html'; }
-      catch (_) { await message('Could not leave', 'Browser storage is unavailable. Please check your browser settings.'); }
-    });
-  });
-  if ($('loginForm')) {
-    $('supportedDomains').textContent = domains.map(domain => `@${domain}`).join(', ');
-    $('loginForm').addEventListener('submit', async event => {
-      event.preventDefault();
-      const button = $('loginButton');
-      if (button.disabled) return;
-      button.disabled = true;
-      try {
-        const result = checkEmail($('emailInput').value);
-        $('emailInput').setAttribute('aria-invalid', String(!result.ok));
-        $('emailError').textContent = result.ok ? '' : result.message;
-        if (!result.ok) {
-          await message('University email required', result.message);
-          $('emailInput').focus(); return;
-        }
-        if (!(await message('Continue to housing', `The domain for ${result.email} is supported. Email ownership has not been verified.`, 'Browse housing', true))) return;
-        try { localStorage.setItem('userEmail', result.email); }
-        catch (_) { await message('Could not save your session', 'Allow browser storage and try again.'); return; }
-        location.href = 'discovery.html';
-      } finally { button.disabled = false; }
-    });
-    $('emailInput').addEventListener('input', () => {
-      $('emailInput').removeAttribute('aria-invalid'); $('emailError').textContent = '';
-    });
-  }
+  const account = await window.SubletAuth.requireStudent();
+  if (!account) return;
+  const savedKey = `savedListings:${account.user_id}`;
   if (!$('listingsGrid')) return;
   const sampleRows = [
     ['almau', 'Modern Studio near AlmaU', 'AlmaU', 'Studio', 180000, '10 mins walk to AlmaU. Alatau Metro: 5 mins. Mega Mall: 7 mins.', '1502672260266-1c1ef2d93688'],
@@ -150,7 +110,7 @@
   });
   let items = [...samples], saved = [], storageError = false, loading = false;
   try {
-    const parsed = JSON.parse(localStorage.getItem('savedListings') || '[]');
+    const parsed = JSON.parse(localStorage.getItem(savedKey) || '[]');
     if (!Array.isArray(parsed) || parsed.some(item => !item || typeof item !== 'object' ||
       typeof item.university !== 'string' || !['number', 'string'].includes(typeof item.price))) throw new Error('Invalid saved data');
     saved = parsed.map((item, index) => {
@@ -168,7 +128,7 @@
   }
   function writeSaved(next) {
     if (storageError) { message('Saved housing unavailable', $('savedNotice').textContent); return false; }
-    try { localStorage.setItem('savedListings', JSON.stringify(next)); saved = next; return true; }
+    try { localStorage.setItem(savedKey, JSON.stringify(next)); saved = next; return true; }
     catch (_) { message('Could not save changes', 'Browser storage may be full or disabled. Your existing saved housing has not been removed.'); return false; }
   }
   function savedItem(item) { return saved.some(row => row.id === item.id); }
@@ -242,12 +202,12 @@
   async function loadListings() {
     if (loading) return;
     loading = true; $('retryApi').disabled = true; $('apiStatus').textContent = 'Loading database housing. Sample rooms are available below.';
-    const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 25000);
     try {
-      const response = await fetch('https://sublet-campus.onrender.com/api/listings', { signal: controller.signal });
-      if (!response.ok) throw new Error('HTTP failure');
-      const result = await response.json();
-      if (result.status !== 'success' || !Array.isArray(result.data)) throw new Error('Invalid response');
+      const { data, error } = await window.SubletAuth.client.from('listing')
+        .select('id,created_at,title,address,price,housing_type,status').eq('status', 'approved');
+      if (error) throw error;
+      const result = { data };
+      if (!Array.isArray(data)) throw new Error('Invalid response');
       const records = result.data.map(databaseRecord).filter(Boolean);
       const unique = [...new Map(records.map(item => [item.id, item])).values()];
       items = [...unique, ...samples];
@@ -261,7 +221,7 @@
       render();
     } catch (_) {
       $('apiStatus').textContent = 'Database housing could not be loaded. You can still browse the rooms already shown. Try again shortly.';
-    } finally { clearTimeout(timer); loading = false; $('retryApi').disabled = false; }
+    } finally { loading = false; $('retryApi').disabled = false; }
   }
   $('retryApi').addEventListener('click', loadListings);
   render(); loadListings();

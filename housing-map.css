@@ -1,0 +1,23 @@
+.housing-layout.with-map { display:grid; grid-template-columns:minmax(0,1fr) minmax(340px,1fr); gap:24px; align-items:start; }
+.with-map .listings-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.map-panel { position:sticky; top:16px; border:1px solid var(--line); border-radius:18px; background:white; min-width:0; overflow:hidden; }
+.map-toolbar { padding:18px; display:flex; justify-content:space-between; gap:12px; align-items:center; }
+.map-toolbar h3 { margin:0; }
+.map-toolbar small { color:var(--muted); }
+.housing-map { height:480px; width:100%; background:#e8eff5; }
+.map-copy { padding:14px 18px; font-size:13px; }
+.map-copy p:last-child { margin-bottom:0; }
+.map-price-pin { border:2px solid white; background:var(--navy); color:white; border-radius:18px; padding:7px 12px; font:800 12px/1.4 'Plus Jakarta Sans',system-ui,sans-serif; white-space:nowrap; box-shadow:0 3px 12px #0f172a40; cursor:pointer; transform:translate(-50%,-100%); }
+.map-price-pin[aria-pressed=true],.candidate-pin { background:#f26547; color:#13243b; }
+.map-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.map-selection,.map-editor { padding:18px; border-top:1px solid var(--line); }
+.map-selection h3,.map-editor h3 { margin-top:0; }
+.map-editor p,.map-selection p { font-size:13px; }
+.coordinate-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+.map-location-button { margin-top:10px; width:100%; font-size:12px; }
+.location-label { color:var(--muted); font-size:12px; margin-bottom:10px; }
+.listing-card.map-selected { outline:3px solid var(--coral); outline-offset:3px; }
+.map-controls { display:flex; flex-wrap:wrap; gap:8px; }
+@media(min-width:1200px) { body:has(.housing-layout.with-map) main { max-width:1520px; } }
+@media(max-width:1050px) { .with-map .listings-grid { grid-template-columns:1fr; } }
+@media(max-width:760px) { .housing-layout.with-map { grid-template-columns:1fr; } .map-panel { position:static; grid-row:1; } .housing-map { height:380px; } .with-map .listings-grid { grid-template-columns:1fr; } .coordinate-fields { grid-template-columns:1fr; } }

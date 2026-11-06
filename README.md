@@ -4,7 +4,7 @@
 
 SubletCampus is a student housing platform prototype designed for university students in Almaty, Kazakhstan. It aims to make housing discovery easier by helping students explore accommodation options, compare prices, search near universities, view locations on an interactive map, and save preferred listings.
 
-The platform also includes student profiles with housing needs and lifestyle preferences as a foundation for future roommate matching.
+Students can also publish a roommate profile, compare preferences and request a connection.
 
 ## Live Demo
 
@@ -41,14 +41,19 @@ The platform also includes student profiles with housing needs and lifestyle pre
 
 The map is integrated into the frontend, but listings need valid coordinates before their individual locations can appear on the map. Location drafts are stored in the current browser and are not published or verified.
 
-### 4. Student Profile
+### 4. Roommate Matching
 
-- Enter student details, university, field of study, and year of study.
-- Describe housing needs and lifestyle preferences.
-- Preview a profile before saving it.
-- Save or delete a student profile in the current browser.
+- Save a roommate profile to Supabase and choose whether to appear in discovery.
+- Compare budget, move-in date, stay length and everyday habits.
+- Filter students by university, area, housing type and preference score.
+- Open the score breakdown to see where preferences agree or differ.
+- Send, accept, decline or cancel connection requests.
+- Share university email addresses only after a request is accepted.
+- Pause discovery or block another student.
 
-Student profiles are currently stored in browser local storage. They are not yet shared between users or devices.
+Discovery starts off. First-name, surname, phone and alternative-email fields are not part of shared cards. Old account-specific browser profiles can be loaded into the form for review.
+
+This feature requires migration `004_roommate_matching.sql`. Matching rules and privacy behavior are described in [ROOMMATES.md](ROOMMATES.md).
 
 ### 5. Backend and Database
 
@@ -75,21 +80,20 @@ SubletCampus is an early-stage prototype, and some features are still under deve
 - Most housing cards contain sample information. The record named `DEMO - Student Apartment` is a demonstration record, not a verified property.
 - Housing listings need valid coordinates before their individual locations can appear on the map.
 - Location drafts are stored only in the current browser and are not published or verified.
-- Saved housing listings and student profiles use browser local storage and are not shared across users or devices.
+- Saved housing listings still use browser storage and are not shared across devices.
 - The authentication flow uses email verification codes, but complete access protection across all pages and workflows should continue to be tested.
-- Roommate matching between different students is not yet implemented.
-- Student profiles are not yet stored in a shared database for other students to discover.
-- Housing submissions, moderation, and complete contact workflows remain future development goals.
+- Roommate scores compare stated preferences. They do not guarantee compatibility or personal safety.
+- Housing submissions, profile photos and moderator report handling remain future work.
 
 ## Future Development
 
 Planned improvements include:
 
 1. Strengthen and test authentication and protected access across the application.
-2. Store student profiles securely in Supabase so they can be accessed across devices.
+2. Add profile photos with controlled storage access.
 3. Add valid property coordinates and display individual housing locations on the map.
-4. Build a shared roommate discovery page.
-5. Develop roommate matching based on budget, preferred area, length of stay, and lifestyle preferences.
+4. Add a reporting and moderation workflow for roommate discovery.
+5. Refine roommate matching based on feedback from students testing it.
 6. Add housing submissions, moderation, and improved contact workflows.
 
 ## Running the Project Locally
@@ -138,7 +142,7 @@ Some features require the configured backend and Supabase services to be availab
 ## Team Contributions
 
 - **Project owner:** Project setup and integration, frontend development, backend and database setup, deployment, documentation, and project testing.
-- **Collaborator (@suleimanabdulsule-tech):** Supabase authentication and university email sign-in improvements, housing discovery and sorting enhancements, interactive 2GIS map integration, and frontend testing.
+- **Collaborator (@suleimanabdulsule-tech):** Supabase authentication and university email sign-in improvements, housing discovery and sorting enhancements, interactive 2GIS map integration, shared roommate profiles, matching and connection requests, and frontend testing.
 
 ## Project Goal
 

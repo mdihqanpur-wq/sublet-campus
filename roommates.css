@@ -1,0 +1,57 @@
+.roommate-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.roommate-heading .eyebrow { margin-bottom: 8px; }
+.roommate-state { padding: 8px 14px; border-radius: 20px; background: #eaf0f7; color: #1b365d; font-weight: 700; white-space: nowrap; }
+.roommate-state.is-live { background: #dcfce7; color: #166534; }
+.roommate-sections { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+.roommate-sections [aria-pressed="true"] { background: #1b365d; color: white; }
+.roommate-panel { padding: 28px; margin: 24px 0; }
+.roommate-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.roommate-fields .full { grid-column: 1 / -1; }
+.roommate-fields textarea { width: 100%; min-height: 120px; padding: 12px; border: 1px solid #b6c4d4; border-radius: 10px; color: #1e293b; font: inherit; resize: vertical; }
+.roommate-form fieldset { padding: 0; border: 0; margin: 0; min-width: 0; }
+.roommate-form fieldset:disabled { opacity: .6; }
+.roommate-form h3 { margin: 28px 0 18px; }
+.roommate-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 20px; }
+.roommate-checkbox { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.7; font-weight: 600; }
+.roommate-checkbox input { width: 20px; height: 20px; flex: 0 0 auto; margin-top: 3px; }
+.roommate-consent { margin-top: 28px; padding: 20px; border-radius: 14px; background: #f1f5f9; }
+.roommate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.roommate-card { background: white; border: 1px solid #dbe3ed; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; min-width: 0; }
+.roommate-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.roommate-avatar { width: 52px; height: 52px; flex-shrink: 0; border-radius: 50%; background: #eaf0f7; color: #1b365d; display: grid; place-items: center; font-size: 22px; font-weight: 800; }
+.roommate-card h3 { margin: 0 0 5px; }
+.roommate-card .muted { font-size: 13px; margin-bottom: 4px; }
+.roommate-bio { white-space: pre-wrap; overflow-wrap: anywhere; }
+.roommate-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.roommate-facts dt { font-size: 12px; color: #526176; }
+.roommate-facts dd { margin: 3px 0 0; font-weight: 700; overflow-wrap: anywhere; }
+.roommate-score { display: flex; align-items: baseline; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 18px; margin-top: auto; }
+.roommate-score strong { font-size: 28px; color: #1b365d; }
+.roommate-caption { color: #526176; font-size: 12px; }
+.roommate-link { border: 0; padding: 8px 0; color: #1b365d; background: transparent; text-align: left; font: inherit; text-decoration: underline; cursor: pointer; }
+.roommate-danger { color: #a12a25; background: #fff1f0; border-color: #fecaca; }
+.roommate-empty { padding: 32px; text-align: center; border: 1px dashed #b6c4d4; border-radius: 18px; background: white; }
+.roommate-request { background: white; border: 1px solid #dbe3ed; border-radius: 18px; padding: 22px; margin: 16px 0; }
+.roommate-request a { overflow-wrap: anywhere; }
+.roommate-request .badge { display: inline-block; margin-bottom: 12px; }
+.roommate-error { color: #b42318; }
+.roommate-pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 28px 0; }
+.roommate-comparison { border-collapse: collapse; width: 100%; margin: 20px 0; font-size: 13px; }
+.roommate-comparison td, .roommate-comparison th { border-bottom: 1px solid #dbe3ed; padding: 12px 6px; text-align: left; vertical-align: top; }
+.roommate-comparison th { color: #1b365d; }
+.roommate-comparison td:last-child { min-width: 65px; }
+.roommate-dialog { max-width: 680px; }
+
+@media (max-width: 700px) {
+    .roommate-heading { flex-direction: column; gap: 12px; }
+    .roommate-fields, .roommate-grid { grid-template-columns: 1fr; }
+    .roommate-panel { padding: 22px; }
+    .roommate-card { padding: 20px; }
+    .roommate-actions .button { flex-grow: 1; }
+}

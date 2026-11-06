@@ -1,325 +1,138 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SubletCampus - My Student Profile</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root { --primary:#1b365d; --accent:#f26547; --accent-hover:#d94e31; --bg:#f8fafc; --muted:#64748b; --border:#dbe4ef; }
-    * { box-sizing:border-box; margin:0; padding:0; font-family:'Plus Jakarta Sans',sans-serif; }
-    body { background:var(--bg); color:#1e293b; min-height:100vh; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:16px 8%; background:#fff; border-bottom:1px solid #e2e8f0; }
-    .brand-title { display:flex; flex-direction:column; align-items:center; text-decoration:none; }
-    .brand-logo-img { height:60px; width:138px; object-fit:contain; }
-    nav { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-    nav a { text-decoration:none; color:var(--primary); font-weight:700; font-size:14px; padding:10px 18px; border-radius:10px; }
-    nav a.active { color:#fff; background:var(--primary); }
-    nav a.logout-btn { color:#dc2626; background:#fee2e2; }
-    .container { max-width:1000px; margin:38px auto; padding:0 20px 50px; width:100%; }
-    .page-header h1 { font-size:clamp(25px,4vw,34px); font-weight:800; color:var(--primary); margin-bottom:8px; }
-    .page-header p { color:var(--muted); font-size:15px; line-height:1.7; margin-bottom:25px; }
-    .card { background:#fff; border-radius:18px; padding:25px; border:1px solid #e2e8f0; box-shadow:0 4px 15px rgba(0,0,0,.03); margin-bottom:22px; }
-    .card h2 { color:var(--primary); font-size:23px; margin-bottom:8px; }
-    .intro { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:22px; }
-    .section-title { color:var(--primary); font-size:16px; font-weight:800; margin:22px 0 13px; padding-bottom:8px; border-bottom:1px solid #e8edf4; }
-    .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px 20px; }
-    .field { display:flex; flex-direction:column; gap:7px; min-width:0; }
-    .field.full { grid-column:1/-1; }
-    label { font-size:13px; font-weight:700; color:#334155; }
-    input,select,textarea { width:100%; padding:13px 14px; border:1px solid #cbd8e7; border-radius:11px; background:#fff; color:#1e293b; font-size:14px; outline:none; }
-    input:focus,select:focus,textarea:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(27,54,93,.1); }
-    textarea { min-height:100px; resize:vertical; line-height:1.6; }
-    .hint { color:var(--muted); font-size:12px; line-height:1.5; }
-    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:23px; }
-    .btn { border:0; border-radius:10px; padding:12px 18px; font-size:14px; font-weight:800; cursor:pointer; }
-    .btn-primary { color:#fff; background:var(--accent); }
-    .btn-primary:hover { background:var(--accent-hover); }
-    .btn-secondary { color:var(--primary); background:#eaf0f7; }
-    .btn-danger { color:#b91c1c; background:#fee2e2; }
-    .notice { display:none; padding:12px 14px; margin-top:16px; border-radius:10px; background:#ecfdf5; color:#166534; font-size:14px; }
-    .profile-preview { display:none; }
-    .preview-top { display:flex; align-items:center; gap:15px; margin:15px 0 18px; }
-    .avatar { width:62px; height:62px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#e8eef8; color:var(--primary); font-size:24px; font-weight:800; flex-shrink:0; }
-    .preview-name { color:var(--primary); font-size:20px; font-weight:800; }
-    .preview-sub { color:var(--muted); font-size:13px; margin-top:4px; }
-    .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    .tag { background:#f1f5f9; color:#475569; border-radius:7px; padding:6px 10px; font-size:12px; font-weight:700; }
-    .privacy { background:#f8fafc; border:1px solid #e2e8f0; border-radius:11px; padding:13px; color:#475569; font-size:12px; line-height:1.6; margin-top:18px; }
-    footer { text-align:center; color:#94a3b8; font-size:12px; padding:20px; }
-    @media(max-width:700px) {
-      header { padding:14px 5%; align-items:flex-start; flex-direction:column; }
-      nav { gap:5px; }
-      nav a { padding:9px 10px; font-size:12px; }
-      .container { margin:25px auto; padding:0 14px 35px; }
-      .card { padding:19px; }
-      .form-grid { grid-template-columns:1fr; }
-      .field.full { grid-column:auto; }
-    }
-  </style>
-  <link rel="stylesheet" href="auth.css">
-  <script src="vendor/supabase.js" defer></script>
-  <script src="auth-config.js" defer></script>
-  <script src="auth.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SubletCampus | Find a Roommate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="campus.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="roommates.css">
+    <script src="vendor/supabase.js" defer></script>
+    <script src="auth-config.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="roommate-helpers.js" defer></script>
+    <script src="roommates.js" defer></script>
 </head>
 <body data-student-page>
-  <header>
-    <a href="index.html" class="brand-title" aria-label="SubletCampus home">
-      <img src="logo.png" alt="SubletCampus Logo" class="brand-logo-img">
-    </a>
-    <nav>
-      <a href="discovery.html">Find Housing</a>
-      <a href="match.html" class="active">My Profile</a>
-      <a href="account.html">My Account</a>
-      <a href="index.html" class="logout-btn" data-account>Sign out</a>
-    </nav>
-  </header>
-
-  <section id="authLoading" class="auth-loading" role="status"><p>Checking your account…</p><noscript>Enable JavaScript to open your housing profile.</noscript></section>
-  <main class="container" data-student-content hidden>
-    <section class="page-header">
-      <h1>My Student Profile</h1>
-      <p>Create your own student profile for SubletCampus. Add your details, housing needs, and lifestyle so other students can understand who you are before connecting.</p>
+    <header>
+        <a href="index.html" class="brand"><img src="logo.png" alt="SubletCampus"></a>
+        <nav aria-label="Main navigation">
+            <a href="discovery.html">Find Housing</a>
+            <a href="match.html" aria-current="page">Roommates</a>
+            <a href="account.html">My Account</a>
+            <a href="index.html" data-account>Sign out</a>
+        </nav>
+    </header>
+    <section id="authLoading" class="auth-loading" role="status">
+        <p>Checking your account…</p>
+        <noscript>Enable JavaScript to find roommates.</noscript>
     </section>
-
-    <section class="card">
-      <h2>Create Your Profile</h2>
-      <p class="intro">This profile is about <strong>you</strong>—not a list of qualities you want in another person. For this first version, your profile is saved only in this browser and is not yet connected to the online database.</p>
-
-      <form id="profileForm">
-        <h3 class="section-title">About Me</h3>
-        <div class="form-grid">
-          <div class="field">
-            <label for="displayName">Display name *</label>
-            <input id="displayName" name="displayName" required maxlength="60" placeholder="e.g. Alex">
-          </div>
-          <div class="field">
-            <label for="university">University *</label>
-            <input id="university" name="university" required maxlength="100" placeholder="e.g. AlmaU">
-          </div>
-          <div class="field">
-            <label for="major">Major / field of study</label>
-            <input id="major" name="major" maxlength="100" placeholder="e.g. Medicine, IT, Business">
-          </div>
-          <div class="field">
-            <label for="yearOfStudy">Year of study</label>
-            <select id="yearOfStudy" name="yearOfStudy">
-              <option value="">Choose year</option>
-              <option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>5th year</option><option>6th year</option><option>Graduate student</option><option>Other</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label for="bio">Short introduction</label>
-            <textarea id="bio" name="bio" maxlength="500" placeholder="Tell other students a little about yourself and what kind of living arrangement you are looking for."></textarea>
-            <span class="hint">Maximum 500 characters. Avoid adding sensitive personal information.</span>
-          </div>
+    <main data-student-content hidden>
+        <div class="roommate-heading">
+            <div>
+                <p class="eyebrow">Share a place. Find your people.</p>
+                <h1>Find a roommate</h1>
+                <p class="muted">Compare housing plans and everyday habits with other students.</p>
+            </div>
+            <span id="visibilityState" class="roommate-state" role="status">Loading profile</span>
         </div>
 
-        <h3 class="section-title">My Housing Needs</h3>
-        <div class="form-grid">
-          <div class="field">
-            <label for="budget">Monthly budget (KZT) *</label>
-            <input id="budget" name="budget" type="number" min="0" max="100000000" step="1000" required placeholder="e.g. 100000">
-          </div>
-          <div class="field">
-            <label for="stayLength">Preferred stay length</label>
-            <select id="stayLength" name="stayLength">
-              <option value="Flexible">Flexible</option><option value="1–3 months">1–3 months</option><option value="6 months" selected>6 months</option><option value="12 months">12 months</option><option value="Long-term">Long-term</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="housingType">Housing type</label>
-            <select id="housingType" name="housingType">
-              <option value="Flexible">Flexible</option><option value="Shared apartment">Shared apartment</option><option value="Private room">Private room</option><option value="Dormitory">Dormitory</option><option value="Studio / apartment">Studio / apartment</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="area">Preferred area in Almaty</label>
-            <input id="area" name="area" maxlength="100" placeholder="e.g. near my university">
-          </div>
+        <div class="roommate-sections" role="group" aria-label="Roommate sections">
+            <button id="profileTab" class="button secondary" type="button" aria-controls="profilePanel" aria-pressed="true">My roommate profile</button>
+            <button id="browseTab" class="button secondary" type="button" aria-controls="browsePanel" aria-pressed="false">Find matches</button>
+            <button id="requestsTab" class="button secondary" type="button" aria-controls="requestsPanel" aria-pressed="false">Requests</button>
         </div>
+        <p id="pageStatus" role="status" aria-live="polite">Loading your saved details…</p>
+        <button id="retryProfile" class="button secondary" type="button" hidden>Try loading again</button>
 
-        <h3 class="section-title">My Lifestyle</h3>
-        <div class="form-grid">
-          <div class="field">
-            <label for="sleep">My usual sleep schedule</label>
-            <select id="sleep" name="sleep"><option value="Flexible">Flexible</option><option value="Early sleeper / early riser">Early sleeper / early riser</option><option value="Night owl">Night owl</option></select>
-          </div>
-          <div class="field">
-            <label for="cleanliness">My usual cleanliness style</label>
-            <select id="cleanliness" name="cleanliness"><option value="Moderately tidy">Moderately tidy</option><option value="Very tidy">Very tidy</option><option value="Relaxed">Relaxed</option></select>
-          </div>
-          <div class="field">
-            <label for="environment">Home environment I usually prefer</label>
-            <select id="environment" name="environment"><option value="Some noise is fine">Some noise is fine</option><option value="Mostly quiet">Mostly quiet</option><option value="Social and lively">Social and lively</option></select>
-          </div>
-          <div class="field">
-            <label for="smoking">Smoking</label>
-            <select id="smoking" name="smoking"><option value="Prefer a smoke-free home">Prefer a smoke-free home</option><option value="Non-smoker">Non-smoker</option><option value="Smoker">Smoker</option><option value="Prefer not to say">Prefer not to say</option></select>
-          </div>
-          <div class="field">
-            <label for="guests">Guests at home</label>
-            <select id="guests" name="guests"><option value="Rarely">Rarely</option><option value="Sometimes" selected>Sometimes</option><option value="Often">Often</option><option value="Prefer no guests">Prefer no guests</option></select>
-          </div>
-          <div class="field">
-            <label for="pets">Pets</label>
-            <select id="pets" name="pets"><option value="No pets preferred">No pets preferred</option><option value="Pets are fine">Pets are fine</option><option value="I have a pet">I have a pet</option><option value="Prefer not to say">Prefer not to say</option></select>
-          </div>
-        </div>
+        <section id="profilePanel" aria-labelledby="profileHeading">
+            <div class="panel roommate-panel">
+                <h2 id="profileHeading">Your roommate profile</h2>
+                <p>Your university is <strong id="profileUniversity"></strong>, based on your verified email.</p>
+                <p class="muted">Save a private draft, or turn on discovery when you’re ready. You can pause it at any time.</p>
+                <div id="legacyNotice" class="notice" hidden>
+                    <p>A housing profile is saved in this browser. You can load its details into this form and review them before saving.</p>
+                    <button id="importLegacy" class="button secondary" type="button">Load browser draft</button>
+                </div>
+                <form id="roommateForm" class="roommate-form" novalidate>
+                    <fieldset id="profileFields" disabled>
+                        <legend class="sr-only">Roommate profile details</legend>
+                        <h3>About you</h3>
+                        <div class="roommate-fields">
+                            <div><label for="display_name">Display name</label><input id="display_name" maxlength="60" autocomplete="nickname"></div>
+                            <div><label for="year_of_study">Year of study</label><select id="year_of_study"><option value="">Choose a year</option><option value="1">1st year</option><option value="2">2nd year</option><option value="3">3rd year</option><option value="4">4th year</option></select></div>
+                            <div class="full"><label for="major">Major / field of study</label><input id="major" maxlength="100"></div>
+                            <div class="full"><label for="bio">Your introduction</label><textarea id="bio" maxlength="500" aria-describedby="bioHint" placeholder="What would you like a future roommate to know about living with you?"></textarea><small id="bioHint" class="muted">10–500 characters to publish. Keep phone numbers and private contact details out of your introduction.</small></div>
+                        </div>
+                        <h3>Your housing plans</h3>
+                        <div class="roommate-fields">
+                            <div><label for="budget_min">Minimum monthly budget (KZT)</label><input id="budget_min" type="number" min="0" max="100000000" step="1" inputmode="numeric"></div>
+                            <div><label for="budget_max">Maximum monthly budget (KZT)</label><input id="budget_max" type="number" min="1" max="100000000" step="1" inputmode="numeric"></div>
+                            <div><label for="move_in_date">Planned move-in date</label><input id="move_in_date" type="date"></div>
+                            <div><label for="stay_months">Planned stay (months)</label><input id="stay_months" type="number" min="1" max="60" step="1" inputmode="numeric"></div>
+                            <div><label for="housing_type">Housing type</label><select id="housing_type"></select></div>
+                            <div><label for="preferred_area">Preferred area in Almaty</label><input id="preferred_area" maxlength="100" list="areaNames" placeholder="Any area, or enter a district"></div>
+                        </div>
+                        <h3>Everyday habits</h3>
+                        <div class="roommate-fields">
+                            <div><label for="sleep_schedule">Sleep schedule</label><select id="sleep_schedule"></select></div>
+                            <div><label for="cleanliness">Cleanliness</label><select id="cleanliness"></select></div>
+                            <div><label for="home_environment">Home environment</label><select id="home_environment"></select></div>
+                            <div><label for="smoking">Smoking</label><select id="smoking"></select></div>
+                            <div><label for="guests">How often do you have guests?</label><select id="guests"></select></div>
+                            <div><label for="pets">Pets</label><select id="pets"></select></div>
+                        </div>
+                        <div class="roommate-consent">
+                            <label class="roommate-checkbox" for="publishProfile">
+                                <input id="publishProfile" type="checkbox">
+                                <span>Show my roommate profile to other participating students. My display name, university, year, major, introduction and housing preferences will be visible. The separate name and contact fields in My Account are not included.</span>
+                            </label>
+                            <p class="roommate-caption">Connection requests share university email addresses only after acceptance. Pausing discovery hides your profile and stops further contact-email access through this feature.</p>
+                        </div>
+                        <p id="formErrors" class="roommate-error" role="alert"></p>
+                        <div class="roommate-actions">
+                            <button id="saveProfile" class="button" type="submit">Save profile</button>
+                            <button id="previewProfile" class="button secondary" type="button">Preview shared profile</button>
+                            <button id="pauseDiscovery" class="button secondary" type="button" hidden>Pause discovery now</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <section id="profilePreview" class="roommate-grid" aria-label="Your shared profile preview" hidden></section>
+        </section>
 
-        <h3 class="section-title">Contact Preference</h3>
-        <div class="form-grid">
-          <div class="field">
-            <label for="contactMethod">Preferred way to be contacted</label>
-            <select id="contactMethod" name="contactMethod"><option value="In-platform request (preferred)">In-platform request (preferred)</option><option value="University email">University email</option><option value="Email after consent">Email after consent</option></select>
-          </div>
-          <div class="field">
-            <label for="contactEmail">Contact email (optional)</label>
-            <input id="contactEmail" name="contactEmail" type="email" maxlength="150" placeholder="you@example.com">
-            <span class="hint">This demo does not send or publish your email.</span>
-          </div>
-        </div>
+        <section id="browsePanel" aria-labelledby="browseHeading" hidden>
+            <h2 id="browseHeading">Students you might live well with</h2>
+            <p class="muted">Scores compare your saved preferences. They aren’t a prediction or a safety check.</p>
+            <p id="browseNotice" class="notice" hidden></p>
+            <form id="filterForm" class="panel roommate-panel">
+                <div class="roommate-fields">
+                    <div><label for="universityFilter">University</label><select id="universityFilter"><option value="">All universities</option><option>AlmaU</option><option>KIMEP</option><option>KazNU</option><option>Satbayev</option><option>Narxoz</option><option>IITU</option></select></div>
+                    <div><label for="housingFilter">Housing type</label><select id="housingFilter"><option value="">All housing types</option></select></div>
+                    <div><label for="areaFilter">Area</label><input id="areaFilter" maxlength="100" list="areaNames" placeholder="Any area, or exact area name"></div>
+                    <div><label for="scoreFilter">Minimum preference match</label><select id="scoreFilter"><option value="0">Any score</option><option value="50">50%</option><option value="70">70%</option><option value="85">85%</option></select></div>
+                    <div class="full"><label class="roommate-checkbox" for="overlapFilter"><input id="overlapFilter" type="checkbox" checked><span>Only show students whose budget range overlaps mine</span></label></div>
+                </div>
+                <div class="roommate-actions"><button id="searchMatches" class="button" type="submit" disabled>Find matches</button><button id="resetFilters" class="button secondary" type="button">Reset filters</button></div>
+            </form>
+            <p id="matchStatus" role="status" aria-live="polite"></p>
+            <div id="matchResults" class="roommate-grid"></div>
+            <div id="matchEmpty" class="roommate-empty" hidden><h3>No matches found yet</h3><p>Try broader filters. Another student needs to publish a profile before you can match with them.</p></div>
+            <div class="roommate-pager"><button id="previousMatches" class="button secondary" type="button" disabled>Previous</button><span id="pageNumber"></span><button id="nextMatches" class="button secondary" type="button" disabled>Next</button></div>
+        </section>
 
-        <div class="privacy"><strong>Privacy note:</strong> Your housing preferences on this page stay in this browser. Your verified account details are stored separately in My Account. Shared roommate discovery and contact requests are not available yet. Do not use a shared computer for private details.</div>
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">Save My Profile</button>
-          <button class="btn btn-secondary" type="button" id="previewButton">Preview Profile</button>
-          <button class="btn btn-danger" type="button" id="deleteButton">Delete Saved Profile</button>
-        </div>
-        <div class="notice" id="statusMessage" role="status" aria-live="polite"></div>
-      </form>
-    </section>
-
-    <section class="card profile-preview" id="profilePreview">
-      <h2>My Profile Preview</h2>
-      <p class="intro">This is how your information looks in this browser. It is not publicly visible to other students yet.</p>
-      <div class="preview-top">
-        <div class="avatar" id="previewAvatar">S</div>
-        <div>
-          <div class="preview-name" id="previewName"></div>
-          <div class="preview-sub" id="previewEducation"></div>
-        </div>
-      </div>
-      <p id="previewBio"></p>
-      <div class="tags" id="previewTags"></div>
-      <p class="hint" id="previewContact" style="margin-top:14px"></p>
-    </section>
-  </main>
-  <footer>SubletCampus · Student housing and roommate connections in Almaty</footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-    const account = await window.SubletAuth.requireStudent();
-    if (!account) return;
-    const STORAGE_KEY = `subletCampusMyProfile:${account.user_id}`;
-    const form = document.getElementById("profileForm");
-    const statusMessage = document.getElementById("statusMessage");
-    const preview = document.getElementById("profilePreview");
-
-    const fieldIds = [
-      "displayName", "university", "major", "yearOfStudy", "bio",
-      "budget", "stayLength", "housingType", "area", "sleep",
-      "cleanliness", "environment", "smoking", "guests", "pets",
-      "contactMethod", "contactEmail"
-    ];
-
-    function readForm() {
-      const profile = {};
-      fieldIds.forEach(id => {
-        profile[id] = document.getElementById(id).value.trim();
-      });
-      return profile;
-    }
-
-    function fillForm(profile) {
-      fieldIds.forEach(id => {
-        if (profile[id] !== undefined && document.getElementById(id)) {
-          document.getElementById(id).value = profile[id];
-        }
-      });
-    }
-
-    function showStatus(message, isError = false) {
-      statusMessage.textContent = message;
-      statusMessage.style.display = "block";
-      statusMessage.style.background = isError ? "#fef2f2" : "#ecfdf5";
-      statusMessage.style.color = isError ? "#991b1b" : "#166534";
-    }
-
-    function renderPreview(profile) {
-      document.getElementById("previewAvatar").textContent =
-        (profile.displayName || "S").charAt(0).toUpperCase();
-      document.getElementById("previewName").textContent = profile.displayName || "Student";
-      document.getElementById("previewEducation").textContent =
-        [profile.major, profile.university, profile.yearOfStudy].filter(Boolean).join(" · ");
-      document.getElementById("previewBio").textContent = profile.bio || "No introduction added yet.";
-      const tags = [
-        profile.budget ? "Budget: " + Number(profile.budget).toLocaleString() + " KZT/month" : "",
-        profile.stayLength ? "Stay: " + profile.stayLength : "",
-        profile.housingType ? "Housing: " + profile.housingType : "",
-        profile.area ? "Area: " + profile.area : "",
-        profile.sleep ? "Sleep: " + profile.sleep : "",
-        profile.cleanliness ? "Cleanliness: " + profile.cleanliness : "",
-        profile.environment ? "Environment: " + profile.environment : "",
-        profile.smoking ? "Smoking: " + profile.smoking : "",
-        profile.guests ? "Guests: " + profile.guests : "",
-        profile.pets ? "Pets: " + profile.pets : ""
-      ].filter(Boolean);
-      const tagContainer = document.getElementById("previewTags");
-      tagContainer.replaceChildren();
-      tags.forEach(text => {
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.textContent = text;
-        tagContainer.appendChild(tag);
-      });
-      const contactText = profile.contactMethod || "No contact preference selected";
-      document.getElementById("previewContact").textContent =
-        "Contact preference: " + contactText +
-        (profile.contactEmail ? " · Email saved locally (not displayed in preview)." : "");
-      preview.style.display = "block";
-    }
-
-    form.addEventListener("submit", event => {
-      event.preventDefault();
-      if (!form.reportValidity()) return;
-      const profile = readForm();
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-        renderPreview(profile);
-        showStatus("Your profile has been saved in this browser only.");
-      } catch (error) {
-        showStatus("Could not save the profile in this browser. Please check browser storage settings.", true);
-      }
-    });
-
-    document.getElementById("previewButton").addEventListener("click", () => {
-      if (!form.reportValidity()) return;
-      renderPreview(readForm());
-      showStatus("Preview created. Click Save My Profile to save it in this browser.");
-    });
-
-    document.getElementById("deleteButton").addEventListener("click", () => {
-      localStorage.removeItem(STORAGE_KEY);
-      form.reset();
-      preview.style.display = "none";
-      showStatus("The locally saved profile has been deleted.");
-    });
-
-    try {
-      const savedProfile = localStorage.getItem(STORAGE_KEY);
-      if (savedProfile) {
-        const profile = JSON.parse(savedProfile);
-        fillForm(profile);
-        renderPreview(profile);
-        showStatus("Your previously saved profile was loaded from this browser.");
-      }
-    } catch (error) {
-      showStatus("A saved profile could not be loaded. You can create a new one.", true);
-    }
-    });
-  </script>
+        <section id="requestsPanel" aria-labelledby="requestsHeading" hidden>
+            <div class="section-heading"><h2 id="requestsHeading">Connection requests</h2><button id="refreshRequests" class="button secondary" type="button">Refresh requests</button></div>
+            <p class="muted">Accepting a request reveals both students’ university email addresses. Phone numbers and alternative emails are never included.</p>
+            <p id="requestStatus" role="status" aria-live="polite"></p>
+            <div id="requestList"></div>
+            <details><summary>Blocked students</summary><p class="roommate-caption">Blocking hides both profiles from each other and closes existing requests. Unblocking does not restore a connection.</p><div id="blockedList"></div></details>
+        </section>
+        <datalist id="areaNames"><option value="Bostandyk"><option value="Almaly"><option value="Medeu"><option value="Auezov"><option value="Alatau"><option value="Nauryzbay"><option value="Turksib"><option value="Zhetysu"></datalist>
+    </main>
+    <footer>SubletCampus · Education • Housing • Community</footer>
 </body>
 </html>

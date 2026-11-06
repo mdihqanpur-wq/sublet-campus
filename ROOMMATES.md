@@ -2,7 +2,7 @@
 
 Roommate profiles are saved in Supabase. Discovery is optional and starts off. A student needs an active, verified university account and a complete published profile to browse matches.
 
-Shared cards contain the display name, university, undergraduate year, major, introduction and housing preferences. First names, surnames, phone numbers and alternative emails remain private. Existing account details are reused instead of creating a second identity.
+Shared cards contain the display name, university, undergraduate year, major, and i did add section of short introduction, with housing preferences. First names, surnames, phone numbers and alternative emails remain private obviously. Existing account details are reused instead of creating a second identity.
 
 ## Ranking
 

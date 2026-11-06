@@ -1,0 +1,12 @@
+{
+  "name": "subletcampus-roommate-checks",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test helpers.test.cjs && node database.mjs && node browser.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.13",
+    "jsdom": "30.1.3"
+  }
+}

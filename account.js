@@ -11,13 +11,15 @@
     $('profileSave').disabled = true; $('contactSave').disabled = true;
     try {
       const [profile, contacts] = await Promise.all([
-        client.from('student_profiles').select(profileFields.join(',')).eq('user_id', account.user_id).single(),
+        client.from('student_profiles').select([...profileFields, 'matching_enabled'].join(',')).eq('user_id', account.user_id).single(),
         client.from('student_contacts').select(contactFields.join(',')).eq('user_id', account.user_id).single()
       ]);
       if (profile.error || contacts.error) throw profile.error || contacts.error;
       for (const field of profileFields) $(field).value = profile.data[field] ?? '';
       for (const field of contactFields) $(field).value = contacts.data[field] ?? '';
-      $('accountNotice').textContent = 'Your account details are private. Other students cannot read them.';
+      $('accountNotice').textContent = profile.data.matching_enabled
+        ? 'Roommate discovery is enabled. Your display name, major, year and introduction can appear on your shared profile. First names, surnames and contact details stay private.'
+        : 'Your account details are private. You can choose which details to share by publishing a roommate profile.';
       $('profileSave').disabled = false; $('contactSave').disabled = false;
     } catch (_) {
       $('accountNotice').textContent = 'Your account details could not be loaded. Refresh this page before making changes.';
